@@ -45,7 +45,7 @@
 #include <unistd.h>
 #endif
 
-#if defined(Q_OS_WINDOWS)
+#if defined(Q_OS_WIN)
 #include <qt_windows.h>
 #endif
 
@@ -62,7 +62,7 @@ KDSingleApplicationLocalSocket::KDSingleApplicationLocalSocket(const QString &na
             .arg(::getuid())
             .arg(qEnvironmentVariable("XDG_SESSION_ID"))
             .arg(name);
-#elif defined(Q_OS_WINDOWS)
+#elif defined(Q_OS_WIN)
     // I'm not sure of a "global session identifier" on Windows; are
     // multiple logins from the same user a possibility? For now, following this:
     // https://docs.microsoft.com/en-us/windows/desktop/devnotes/getting-the-session-id-of-the-current-process
