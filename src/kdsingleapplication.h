@@ -35,6 +35,8 @@ class KDSingleApplicationPrivate;
 class KDSINGLEAPPLICATION_EXPORT KDSingleApplication : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QString name READ name CONSTANT)
+    Q_PROPERTY(bool isPrimaryInstance READ isPrimaryInstance CONSTANT)
 
 public:
     explicit KDSingleApplication(QObject *parent = nullptr);
