@@ -50,11 +50,12 @@ int main(int argc, char **argv)
         QString(1024, QLatin1Char('x'))
     };
 
-    const QString mode = app.arguments().at(1);
-    const int counter = app.arguments().at(2).toInt();
+    const QString appName = QLatin1String("stresstest-") + app.arguments().at(1);
+    const QString mode = app.arguments().at(2);
+    const int counter = app.arguments().at(3).toInt();
 
     if (mode == QLatin1String("primary")) {
-        KDSingleApplication kdsa;
+        KDSingleApplication kdsa(appName);
         if (!kdsa.isPrimaryInstance())
             return 1;
 
@@ -77,7 +78,7 @@ int main(int argc, char **argv)
         return app.exec();
     } else if (mode == QLatin1String("secondary")) {
         for (int i = 0; i < counter; ++i) {
-            KDSingleApplication kdsa;
+            KDSingleApplication kdsa(appName);
             if (kdsa.isPrimaryInstance())
                 return 1;
 

@@ -23,9 +23,11 @@
 */
 
 #include <QtCore/QCoreApplication>
+#include <QtCore/QRandomGenerator>
 #include <QtCore/QStringList>
 #include <QtCore/QString>
 #include <QtCore/QTimer>
+#include <QtCore/QThread>
 
 #include <kdsingleapplication.h>
 
@@ -44,27 +46,37 @@ int main(int argc, char **argv)
 
     QCoreApplication app(argc, argv);
 
-    KDSingleApplication kdsa;
+    const int delay = (int)QRandomGenerator::global()->bounded(100, 200);
+    QThread::msleep(delay);
 
+    const QString appName = QLatin1String("stresstest2-") + app.arguments().at(1);
+
+    KDSingleApplication kdsa(appName);
     if (kdsa.isPrimaryInstance()) {
         std::cout << "Primary" << std::endl;
 
+        int counter = app.arguments().at(2).toInt();
+        --counter;
+
         QObject::connect(&kdsa, &KDSingleApplication::messageReceived,
-                         [](const QString &message) {
-            std::cout << "MESSAGE: >"  << qPrintable(message) << '<' << std::endl;
-            qApp->quit();
+                         [&counter]()
+        {
+            --counter;
+            if (counter == 0)
+                qApp->quit();
         });
 
-        QTimer::singleShot(5000, [](){ qApp->exit(1); });
+        QTimer::singleShot(30000, [&counter](){
+            std::cerr << "Primary time out, still " << counter << " secondaries" << std::endl;
+            qApp->exit(1);
+        });
 
         return app.exec();
     } else {
         std::cout << "Secondary" << std::endl;
 
-        if (!kdsa.sendMessage(app.arguments().at(1))) {
-            std::cerr << "Unable to send message to the primary!" << std::endl;
+        if (!kdsa.sendMessage(QString(delay, QLatin1Char('x'))))
             return 1;
-        }
     }
 
     return 0;
