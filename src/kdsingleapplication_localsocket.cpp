@@ -97,9 +97,9 @@ KDSingleApplicationLocalSocket::KDSingleApplicationLocalSocket(const QString &na
         QLocalServer::removeServer(m_socketName);
         if (!server->listen(m_socketName)) {
             // TODO: better error handling.
-            qWarning("KDSingleApplication: unable to make the primary instance listen on %s: %s",
-                     qPrintable(m_socketName),
-                     qPrintable(server->errorString()));
+            qWarning("KDSingleApplication: unable to make the primary instance listen on %ls: %ls",
+                     qUtf16Printable(m_socketName),
+                     qUtf16Printable(server->errorString()));
 
             return;
         }
