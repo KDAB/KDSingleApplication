@@ -24,6 +24,14 @@ under the terms of the MIT license (see LICENSE.MIT.txt).
 
 Contact KDAB at <info@kdab.com> if you need different licensing options.
 
+Get Involved
+============
+KDAB will happily accept external contributions; however, **all**
+contributions will require a signed Contributor License Agreement
+(see docs/KDSingleApplication-CopyrightAssignmentForm.docx).
+
+Contact info@kdab.com for more information.
+
 About KDAB
 ==========
 KDSingleApplication is supported and maintained by Klarälvdalens Datakonsult AB (KDAB).
