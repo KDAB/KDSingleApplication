@@ -29,10 +29,12 @@
 #include <QtCore/QByteArray>
 #include <QtCore/QString>
 
+QT_BEGIN_NAMESPACE
 class QLockFile;
 class QLocalServer;
 class QLocalSocket;
 class QTimer;
+QT_END_NAMESPACE
 
 #include <memory>
 #include <vector>

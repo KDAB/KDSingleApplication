@@ -27,6 +27,10 @@
 
 #include <QWidget>
 
+QT_BEGIN_NAMESPACE
+class QListWidget;
+QT_END_NAMESPACE
+
 class PrimaryInstanceWidget : public QWidget
 {
     Q_OBJECT
@@ -38,7 +42,7 @@ public slots:
     void addMessage(const QString &message);
 
 private:
-    class QListWidget *m_messagesListWidget;
+    QListWidget *m_messagesListWidget;
 };
 
 #endif // PRIMARYINSTANCEWIDGET_H

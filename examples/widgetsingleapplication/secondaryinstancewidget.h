@@ -27,6 +27,10 @@
 
 #include <QWidget>
 
+QT_BEGIN_NAMESPACE
+class QLineEdit;
+QT_END_NAMESPACE
+
 class KDSingleApplication;
 
 class SecondaryInstanceWidget : public QWidget
@@ -39,8 +43,8 @@ public:
 
 private:
     void sendMessage();
-    class KDSingleApplication *m_kdsa;
-    class QLineEdit *m_messageEdit;
+    KDSingleApplication *m_kdsa;
+    QLineEdit *m_messageEdit;
 };
 
 #endif // SECONDARYINSTANCEWIDGET_H
