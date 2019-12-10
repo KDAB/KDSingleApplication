@@ -32,6 +32,9 @@ contributions will require a signed Contributor License Agreement
 
 Contact info@kdab.com for more information.
 
+Please submit your contributions or issue reports from our GitHub space at
+https://github.com/KDAB/KDSingleApplication
+
 About KDAB
 ==========
 KDSingleApplication is supported and maintained by Klarälvdalens Datakonsult AB (KDAB).
