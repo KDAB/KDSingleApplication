@@ -32,6 +32,9 @@ contributions will require a signed Contributor License Agreement
 
 Contact info@kdab.com for more information.
 
+Please submit your contributions or issue reports from our GitHub space at
+https://github.com/KDAB/KDSingleApplication
+
 About KDAB
 ==========
 KDSingleApplication is supported and maintained by Klarälvdalens Datakonsult AB (KDAB).
@@ -45,4 +48,4 @@ We continue to help develop parts of Qt and are one of the major contributors
 to the Qt Project. We can give advanced or standard trainings anywhere
 around the globe on Qt as well as C++, OpenGL, 3D and more.
 
-Please visit http://www.kdab.com to meet the people who write code like this.
+Please visit https://www.kdab.com to meet the people who write code like this.
