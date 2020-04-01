@@ -38,7 +38,7 @@ class PrimaryInstanceWidget : public QWidget
 public:
     explicit PrimaryInstanceWidget(QWidget *parent = nullptr);
 
-public slots:
+public Q_SLOTS:
     void addMessage(const QString &message);
 
 private:

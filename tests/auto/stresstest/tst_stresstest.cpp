@@ -34,7 +34,7 @@
 class tst_StressTest : public QObject
 {
     Q_OBJECT
-private slots:
+private Q_SLOTS:
     void testOnePrimaryManySecondaries();
 
     void testOnlyOnePrimary_data();
@@ -50,7 +50,12 @@ void tst_StressTest::testOnePrimaryManySecondaries()
     //
     // (The primary will do the math internally)
 
+#ifdef KDSINGLEAPPLICATION_BINARY_DIR
+    const QString executable = QStringLiteral(KDSINGLEAPPLICATION_BINARY_DIR "stresstest");
+#else
     const QString executable = QStringLiteral("stresstest/stresstest");
+#endif
+
     const int secondariesCount = 50;
     const int runsPerSecondary = 50;
     const QString testId = QString::number(QRandomGenerator::global()->generate());
@@ -111,7 +116,12 @@ void tst_StressTest::testOnlyOnePrimary()
     int primaryCount = 0;
     int secondaryCount = 0;
 
+#ifdef KDSINGLEAPPLICATION_BINARY_DIR
+    const QString executable = QStringLiteral(KDSINGLEAPPLICATION_BINARY_DIR "stresstest2");
+#else
     const QString executable = QStringLiteral("stresstest2/stresstest2");
+#endif
+
     const QString countString = QString::number(count);
     const QString testId = QString::number(QRandomGenerator::global()->generate());
 

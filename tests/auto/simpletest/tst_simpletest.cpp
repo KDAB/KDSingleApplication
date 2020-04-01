@@ -36,7 +36,7 @@
 class tst_SimpleTest : public QObject
 {
     Q_OBJECT
-private slots:
+private Q_SLOTS:
     void testSimple_data();
     void testSimple();
 };
@@ -58,8 +58,11 @@ void tst_SimpleTest::testSimple_data()
 void tst_SimpleTest::testSimple()
 {
     QFETCH(QString, message);
-
+#ifdef KDSINGLEAPPLICATION_BINARY_DIR
+    const QString executable = QStringLiteral(KDSINGLEAPPLICATION_BINARY_DIR "simpletest");
+#else
     const QString executable = QStringLiteral("simpletest/simpletest");
+#endif
     QByteArray output;
     bool ok;
 

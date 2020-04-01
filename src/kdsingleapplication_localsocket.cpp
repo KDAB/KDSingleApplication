@@ -261,7 +261,7 @@ bool KDSingleApplicationLocalSocket::readDataFromSecondarySocket(QLocalSocket *s
 
     if (ds.commitTransaction()) {
         qCDebug(kdsaLocalSocket) << "Got a complete message:" << message;
-        emit messageReceived(message);
+        Q_EMIT messageReceived(message);
         m_clients.erase(i);
         return true;
     }
