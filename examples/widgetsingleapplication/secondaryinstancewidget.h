@@ -43,8 +43,8 @@ public:
 
 private:
     void sendMessage();
-    KDSingleApplication *m_kdsa;
-    QLineEdit *m_messageEdit;
+    KDSingleApplication *m_kdsa = nullptr;
+    QLineEdit *m_messageEdit = nullptr;
 };
 
 #endif // SECONDARYINSTANCEWIDGET_H

@@ -24,8 +24,8 @@
 
 #include "primaryinstancewidget.h"
 
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QListWidget>
+#include <QLabel>
+#include <QListWidget>
 
 #include <QVBoxLayout>
 
@@ -34,13 +34,11 @@ PrimaryInstanceWidget::PrimaryInstanceWidget(QWidget *parent)
 {
     setWindowTitle(tr("Primary instance"));
     QLabel *label = new QLabel(tr("<b>Primary instance.</b> Messages received from secondaries:"));
-    m_messagesListWidget = new QListWidget;
+    m_messagesListWidget = new QListWidget(this);
 
-    QVBoxLayout *layout = new QVBoxLayout;
+    QVBoxLayout *layout = new QVBoxLayout(this);
     layout->addWidget(label);
     layout->addWidget(m_messagesListWidget);
-
-    setLayout(layout);
 }
 
 void PrimaryInstanceWidget::addMessage(const QString &message)

@@ -42,7 +42,7 @@ public slots:
     void addMessage(const QString &message);
 
 private:
-    QListWidget *m_messagesListWidget;
+    QListWidget *m_messagesListWidget = nullptr;
 };
 
 #endif // PRIMARYINSTANCEWIDGET_H

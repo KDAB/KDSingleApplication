@@ -59,7 +59,7 @@ SecondaryInstanceWidget::SecondaryInstanceWidget(KDSingleApplication *kdsa, QWid
 
 void SecondaryInstanceWidget::sendMessage()
 {
-    QString message = m_messageEdit->text();
+    const QString message = m_messageEdit->text();
     if (!message.isEmpty()) {
         if (m_kdsa->sendMessageWithTimeout(message, 1000)) {
             m_messageEdit->clear();
