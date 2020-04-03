@@ -3,10 +3,13 @@ set(KDSINGLEAPPLICATION_SRCS
 	kdsingleapplication_localsocket.cpp)
 
 set(KDSINGLEAPPLICATION_INSTALLABLE_INCLUDES
-	kdsingleapplication.h
-	kdsingleapplication_lib.h
-	kdsingleapplication_localsocket_p.h
+       kdsingleapplication.h
+       kdsingleapplication_lib.h
     )
+
+set(KDSINGLEAPPLICATION_NON_INSTALLABLE_INCLUDES
+       kdsingleapplication_localsocket_p.h
+   )
 
 if (${PROJECT_NAME}_STATIC)
     add_library(kdsingleapplication STATIC ${KDSINGLEAPPLICATION_INSTALLABLE_INCLUDES} ${KDSINGLEAPPLICATION_SRCS})
