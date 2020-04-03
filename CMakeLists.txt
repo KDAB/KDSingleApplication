@@ -19,6 +19,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 option(OPTION_DEVELOPER_MODE "Developer Mode" OFF)
 option(${PROJECT_NAME}_TESTS "Build the tests" OFF)
 option(${PROJECT_NAME}_EXAMPLES "Build the examples" OFF)
+option(${PROJECT_NAME}_STATIC "Build lib as shared" OFF)
 
 add_definitions(-DQT_NO_CAST_TO_ASCII
                 -DQT_NO_CAST_FROM_ASCII
@@ -34,7 +35,7 @@ add_definitions(-DQT_NO_CAST_TO_ASCII
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-add_definitions(-DKDSINGLEAPPLICATION_STATIC_BUILD)
+
 if (NOT WIN32)
     # Strict iterators can't be used on Windows, they lead to a link error
     # when application code iterates over a QVector<QPoint> for instance, unless

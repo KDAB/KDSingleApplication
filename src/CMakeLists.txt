@@ -8,7 +8,13 @@ set(KDSINGLEAPPLICATION_INSTALLABLE_INCLUDES
 	kdsingleapplication_localsocket_p.h
     )
 
-add_library(kdsingleapplication SHARED ${KDSINGLEAPPLICATION_INSTALLABLE_INCLUDES} ${KDSINGLEAPPLICATION_SRCS})
+if (${PROJECT_NAME}_STATIC)
+    add_library(kdsingleapplication STATIC ${KDSINGLEAPPLICATION_INSTALLABLE_INCLUDES} ${KDSINGLEAPPLICATION_SRCS})
+    target_compile_definitions(kdsingleapplication PUBLIC KDSINGLEAPPLICATION_STATIC_BUILD)
+else()
+    add_library(kdsingleapplication SHARED ${KDSINGLEAPPLICATION_INSTALLABLE_INCLUDES} ${KDSINGLEAPPLICATION_SRCS})
+    target_compile_definitions(kdsingleapplication PRIVATE KDSINGLEAPPLICATION_SHARED_BUILD)
+endif()
 
 target_include_directories(kdsingleapplication
     PUBLIC
