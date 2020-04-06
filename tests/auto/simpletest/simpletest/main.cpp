@@ -52,8 +52,8 @@ int main(int argc, char **argv)
         std::cout << "Primary" << std::endl;
 
         QObject::connect(&kdsa, &KDSingleApplication::messageReceived,
-                         [](const QString &message) {
-            std::cout << "MESSAGE: >"  << qPrintable(message) << '<' << std::endl;
+                         [](const QByteArray &message) {
+            std::cout << "MESSAGE: >"  << message.constData() << '<' << std::endl;
             qApp->quit();
         });
 
@@ -63,7 +63,7 @@ int main(int argc, char **argv)
     } else {
         std::cout << "Secondary" << std::endl;
 
-        if (!kdsa.sendMessage(app.arguments().at(2))) {
+        if (!kdsa.sendMessage(app.arguments().at(2).toUtf8())) {
             std::cerr << "Unable to send message to the primary!" << std::endl;
             return 1;
         }

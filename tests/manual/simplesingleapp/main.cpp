@@ -27,6 +27,7 @@
 
 #include <kdsingleapplication.h>
 
+#include <QTextStream>
 #include <chrono>
 #include <iostream>
 
@@ -46,15 +47,15 @@ int main(int argc, char **argv)
         shutdownTimer.start();
 
         QObject::connect(&kdsa, &KDSingleApplication::messageReceived,
-                         [&shutdownTimer](const QString &message) {
+                         [&shutdownTimer](const QByteArray &message) {
             shutdownTimer.start();
-            std::cout << "Message from secondary: >"  << qPrintable(message) << '<' << std::endl;
+            std::cout << "Message from secondary: >"  << message.constData() << '<' << std::endl;
         });
     } else {
         auto args = app.arguments();
-        QString message = args.join(QLatin1Char(','));
+        const QByteArray message = args.join(QLatin1Char(',')).toUtf8();
 
-        std::cout << "Secondary; sending message >" << qPrintable(message) << '<' << std::endl;
+        std::cout << "Secondary; sending message >" << message.constData() << '<' << std::endl;
 
         if (!kdsa.sendMessage(message)) {
             std::cerr << "Unable to send message to the primary!" << std::endl;

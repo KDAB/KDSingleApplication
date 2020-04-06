@@ -92,10 +92,10 @@ public:
     bool isPrimaryInstance() const;
 
 public Q_SLOTS:
-    bool sendMessage(const QString &message, int timeout);
+    bool sendMessage(const QByteArray &message, int timeout);
 
 Q_SIGNALS:
-    void messageReceived(const QString &message);
+    void messageReceived(const QByteArray &message);
 
 private:
     void handleNewConnection();

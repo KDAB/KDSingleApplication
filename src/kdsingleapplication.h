@@ -48,11 +48,11 @@ public:
 
 public Q_SLOTS:
     // avoid default arguments and overloads, as they don't mix with connections
-    bool sendMessage(const QString &message);
-    bool sendMessageWithTimeout(const QString &message, int timeout);
+    bool sendMessage(const QByteArray &message);
+    bool sendMessageWithTimeout(const QByteArray &message, int timeout);
 
 Q_SIGNALS:
-    void messageReceived(const QString &message);
+    void messageReceived(const QByteArray &message);
 
 private:
     Q_DECLARE_PRIVATE(KDSingleApplication)

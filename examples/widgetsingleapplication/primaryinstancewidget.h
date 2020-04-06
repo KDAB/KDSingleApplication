@@ -39,7 +39,7 @@ public:
     explicit PrimaryInstanceWidget(QWidget *parent = nullptr);
 
 public Q_SLOTS:
-    void addMessage(const QString &message);
+    void addMessage(const QByteArray &message);
 
 private:
     QListWidget *m_messagesListWidget = nullptr;

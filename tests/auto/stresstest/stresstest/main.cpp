@@ -44,10 +44,10 @@ int main(int argc, char **argv)
 
     QCoreApplication app(argc, argv);
 
-    const QStringList messages = {
-        QStringLiteral("secondary"),
-        QStringLiteral("secondary 123456"),
-        QString(1024, QLatin1Char('x'))
+    const QByteArrayList messages = {
+        QByteArrayLiteral("secondary"),
+        QByteArrayLiteral("secondary 123456"),
+        QByteArray(1024, 'x')
     };
 
     const QString appName = QLatin1String("stresstest-") + app.arguments().at(1);

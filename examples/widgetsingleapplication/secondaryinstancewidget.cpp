@@ -61,7 +61,7 @@ void SecondaryInstanceWidget::sendMessage()
 {
     const QString message = m_messageEdit->text();
     if (!message.isEmpty()) {
-        if (m_kdsa->sendMessageWithTimeout(message, 1000)) {
+        if (m_kdsa->sendMessageWithTimeout(message.toUtf8(), 1000)) {
             m_messageEdit->clear();
         } else {
             QMessageBox::warning(this,

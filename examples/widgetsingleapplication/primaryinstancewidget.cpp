@@ -41,8 +41,8 @@ PrimaryInstanceWidget::PrimaryInstanceWidget(QWidget *parent)
     layout->addWidget(m_messagesListWidget);
 }
 
-void PrimaryInstanceWidget::addMessage(const QString &message)
+void PrimaryInstanceWidget::addMessage(const QByteArray &message)
 {
-    m_messagesListWidget->addItem(message);
+    m_messagesListWidget->addItem(QString::fromUtf8(message));
     m_messagesListWidget->scrollToBottom();
 }

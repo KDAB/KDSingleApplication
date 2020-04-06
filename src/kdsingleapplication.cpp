@@ -49,7 +49,7 @@ public:
         return m_impl.isPrimaryInstance();
     }
 
-    bool sendMessage(const QString &message, int timeout)
+    bool sendMessage(const QByteArray &message, int timeout)
     {
         return m_impl.sendMessage(message, timeout);
     }
@@ -105,12 +105,12 @@ bool KDSingleApplication::isPrimaryInstance() const
     return d->isPrimaryInstance();
 }
 
-bool KDSingleApplication::sendMessage(const QString &message)
+bool KDSingleApplication::sendMessage(const QByteArray &message)
 {
     return sendMessageWithTimeout(message, 5000);
 }
 
-bool KDSingleApplication::sendMessageWithTimeout(const QString &message, int timeout)
+bool KDSingleApplication::sendMessageWithTimeout(const QByteArray &message, int timeout)
 {
     Q_ASSERT(!isPrimaryInstance());
 

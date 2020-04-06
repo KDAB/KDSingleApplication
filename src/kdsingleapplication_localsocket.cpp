@@ -119,7 +119,7 @@ bool KDSingleApplicationLocalSocket::isPrimaryInstance() const
     return m_localServer != nullptr;
 }
 
-bool KDSingleApplicationLocalSocket::sendMessage(const QString &message, int timeout)
+bool KDSingleApplicationLocalSocket::sendMessage(const QByteArray &message, int timeout)
 {
     Q_ASSERT(!isPrimaryInstance());
     QLocalSocket socket;
@@ -256,7 +256,7 @@ bool KDSingleApplicationLocalSocket::readDataFromSecondarySocket(QLocalSocket *s
     ds.skipRawData(1);
 
     ds.startTransaction();
-    QString message;
+    QByteArray message;
     ds >> message;
 
     if (ds.commitTransaction()) {

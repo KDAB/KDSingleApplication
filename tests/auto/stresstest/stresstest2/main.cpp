@@ -75,7 +75,7 @@ int main(int argc, char **argv)
     } else {
         std::cout << "Secondary" << std::endl;
 
-        if (!kdsa.sendMessage(QString(delay, QLatin1Char('x'))))
+        if (!kdsa.sendMessage(QByteArray(delay, 'x')))
             return 1;
     }
 
