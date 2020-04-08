@@ -24,7 +24,7 @@
 
 #include <QtCore/QProcess>
 #include <QtCore/QRandomGenerator>
-#include <QtTest/QtTest>
+#include <QtTest/QTest>
 
 
 #include <vector>
