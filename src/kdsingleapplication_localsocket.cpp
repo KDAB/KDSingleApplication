@@ -156,8 +156,10 @@ bool KDSingleApplicationLocalSocket::sendMessage(const QByteArray &message, int 
     // There is no acknowledgement mechanism here.
     // Should there be one?
 
-    if (!socket.waitForBytesWritten(deadline.remainingTime()))
-        return false;
+    while (socket.bytesToWrite() > 0) {
+        if (!socket.waitForBytesWritten(deadline.remainingTime()))
+            return false;
+    }
 
     qCDebug(kdsaLocalSocket) << "Bytes written, now disconnecting" << "Timer remaining" << deadline.remainingTime() << "Expired?" << deadline.hasExpired();
 
