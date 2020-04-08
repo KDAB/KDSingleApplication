@@ -52,7 +52,8 @@ int main(int argc, char **argv)
 
     const QString appName = QLatin1String("stresstest-") + app.arguments().at(1);
     const QString mode = app.arguments().at(2);
-    const int counter = app.arguments().at(3).toInt();
+    const int timeout = app.arguments().at(3).toInt();
+    const int counter = app.arguments().at(4).toInt();
 
     if (mode == QLatin1String("primary")) {
         KDSingleApplication kdsa(appName);
@@ -70,7 +71,7 @@ int main(int argc, char **argv)
                 qApp->quit();
         });
 
-        QTimer::singleShot(30000, [&totalMessages](){
+        QTimer::singleShot(timeout, [&totalMessages](){
             std::cerr << "Primary timed out, still " << totalMessages << " messages" << std::endl;
             qApp->exit(1);
         });
@@ -83,7 +84,7 @@ int main(int argc, char **argv)
                 return 1;
 
             for (const auto &message : messages) {
-                if (!kdsa.sendMessage(message))
+                if (!kdsa.sendMessageWithTimeout(message, timeout))
                     return 2;
             }
         }

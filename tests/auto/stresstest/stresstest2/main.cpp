@@ -50,12 +50,13 @@ int main(int argc, char **argv)
     QThread::msleep(delay);
 
     const QString appName = QLatin1String("stresstest2-") + app.arguments().at(1);
+    const int timeout = app.arguments().at(2).toInt();
 
     KDSingleApplication kdsa(appName);
     if (kdsa.isPrimaryInstance()) {
         std::cout << "Primary" << std::endl;
 
-        int counter = app.arguments().at(2).toInt();
+        int counter = app.arguments().at(3).toInt();
         --counter;
 
         QObject::connect(&kdsa, &KDSingleApplication::messageReceived,
@@ -66,7 +67,7 @@ int main(int argc, char **argv)
                 qApp->quit();
         });
 
-        QTimer::singleShot(30000, [&counter](){
+        QTimer::singleShot(timeout, [&counter](){
             std::cerr << "Primary time out, still " << counter << " secondaries" << std::endl;
             qApp->exit(1);
         });
@@ -75,7 +76,7 @@ int main(int argc, char **argv)
     } else {
         std::cout << "Secondary" << std::endl;
 
-        if (!kdsa.sendMessage(QByteArray(delay, 'x')))
+        if (!kdsa.sendMessageWithTimeout(QByteArray(delay, 'x'), timeout))
             return 1;
     }
 
