@@ -27,7 +27,6 @@
 
 #include <kdsingleapplication.h>
 
-#include <QTextStream>
 #include <chrono>
 #include <iostream>
 

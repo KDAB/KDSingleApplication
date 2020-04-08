@@ -26,7 +26,6 @@
 #include <QtCore/QRandomGenerator>
 #include <QtTest/QtTest>
 
-#include <QDebug>
 
 #include <vector>
 #include <memory>
