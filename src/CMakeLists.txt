@@ -19,9 +19,13 @@ else()
     target_compile_definitions(kdsingleapplication PRIVATE KDSINGLEAPPLICATION_SHARED_BUILD)
 endif()
 
+include(GNUInstallDirs)
+
+set(KDSINGLEAPPLICATION_INCLUDEDIR ${CMAKE_INSTALL_INCLUDEDIR}/kdsingleapplication)
+
 target_include_directories(kdsingleapplication
     PUBLIC
-        $<INSTALL_INTERFACE:include>
+        $<INSTALL_INTERFACE:${KDSINGLEAPPLICATION_INCLUDEDIR}>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}
@@ -32,7 +36,7 @@ if (WIN32)
 endif()
 target_link_libraries(kdsingleapplication Qt5::Core Qt5::Network)
 
-install (FILES ${KDSINGLEAPPLICATION_INSTALLABLE_INCLUDES} DESTINATION include/kdsingleapplication)
+install (FILES ${KDSINGLEAPPLICATION_INSTALLABLE_INCLUDES} DESTINATION ${KDSINGLEAPPLICATION_INCLUDEDIR})
 
 install (TARGETS kdsingleapplication
          EXPORT kdsingleapplicationTargets
