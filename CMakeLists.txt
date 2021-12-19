@@ -9,10 +9,8 @@ project(KDSingleApplication
 cmake_policy(SET CMP0020 NEW)
 cmake_policy(SET CMP0042 NEW)
 
-find_package(Qt6 COMPONENTS Network)
-if (NOT Qt6_FOUND)
-    find_package(Qt5 5.15 COMPONENTS Network REQUIRED)
-endif (NOT Qt6_FOUND)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Network REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Network REQUIRED)
 
 set(CMAKE_AUTOMOC ON)
 

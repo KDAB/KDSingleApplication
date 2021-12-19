@@ -34,7 +34,7 @@ target_include_directories(kdsingleapplication
 if (WIN32)
     target_link_libraries(kdsingleapplication kernel32)
 endif()
-target_link_libraries(kdsingleapplication Qt::Core Qt::Network)
+target_link_libraries(kdsingleapplication Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Network)
 
 install (FILES ${KDSINGLEAPPLICATION_INSTALLABLE_INCLUDES} DESTINATION ${KDSINGLEAPPLICATION_INCLUDEDIR})
 
