@@ -59,7 +59,6 @@ if (${PROJECT_NAME}_TESTS)
     add_subdirectory(tests)
 endif()
 if (${PROJECT_NAME}_EXAMPLES)
-    find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
     find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
     add_subdirectory(examples)
