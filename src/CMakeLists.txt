@@ -18,6 +18,7 @@ else()
     add_library(kdsingleapplication SHARED ${KDSINGLEAPPLICATION_INSTALLABLE_INCLUDES} ${KDSINGLEAPPLICATION_SRCS})
     target_compile_definitions(kdsingleapplication PRIVATE KDSINGLEAPPLICATION_SHARED_BUILD)
 endif()
+add_library(KDAB::kdsingleapplication ALIAS kdsingleapplication)
 
 include(GNUInstallDirs)
 
