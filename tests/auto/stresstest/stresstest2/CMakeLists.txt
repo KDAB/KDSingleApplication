@@ -4,4 +4,3 @@ target_link_libraries(stresstest2
        Qt5::Widgets
        kdsingleapplication
 )
-

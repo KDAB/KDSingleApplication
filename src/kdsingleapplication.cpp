@@ -120,4 +120,3 @@ bool KDSingleApplication::sendMessageWithTimeout(const QByteArray &message, int 
 
 
 KDSingleApplication::~KDSingleApplication() = default;
-

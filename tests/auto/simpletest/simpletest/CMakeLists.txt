@@ -4,5 +4,3 @@ target_link_libraries(simpletest
 	Qt5::Widgets
 	kdsingleapplication
 )
-
-
