@@ -47,9 +47,9 @@ int main(int argc, char **argv)
 
         QObject::connect(&kdsa, &KDSingleApplication::messageReceived,
                          [&shutdownTimer](const QByteArray &message) {
-            shutdownTimer.start();
-            std::cout << "Message from secondary: >"  << message.constData() << '<' << std::endl;
-        });
+                             shutdownTimer.start();
+                             std::cout << "Message from secondary: >" << message.constData() << '<' << std::endl;
+                         });
     } else {
         auto args = app.arguments();
         const QByteArray message = args.join(QLatin1Char(',')).toUtf8();

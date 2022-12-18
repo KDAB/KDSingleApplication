@@ -65,13 +65,12 @@ int main(int argc, char **argv)
         int totalMessages = counter * messages.size();
 
         QObject::connect(&kdsa, &KDSingleApplication::messageReceived,
-                         [&totalMessages]()
-        {
-            if (--totalMessages == 0)
-                qApp->quit();
-        });
+                         [&totalMessages]() {
+                             if (--totalMessages == 0)
+                                 qApp->quit();
+                         });
 
-        QTimer::singleShot(timeout, [&totalMessages](){
+        QTimer::singleShot(timeout, [&totalMessages]() {
             std::cerr << "Primary timed out, still " << totalMessages << " messages" << std::endl;
             qApp->exit(1);
         });

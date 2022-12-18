@@ -107,7 +107,7 @@ void tst_StressTest::testOnePrimaryManySecondaries()
     QVERIFY(primary.waitForStarted());
     QCOMPARE(primary.state(), QProcess::Running);
     output.clear();
-    ok = QTest::qWaitFor([&](){
+    ok = QTest::qWaitFor([&]() {
         output += primary.readAllStandardOutput();
         return output == "Primary\n";
     });

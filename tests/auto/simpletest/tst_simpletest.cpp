@@ -47,7 +47,7 @@ void tst_SimpleTest::testSimple_data()
     QTest::addRow("message-1") << QStringLiteral("Hello");
     QTest::addRow("message-2") << QStringLiteral("Hello World");
     QTest::addRow("message-3") << QStringLiteral("Hello World 123456789");
-    //QTest::addRow("message empty") << QString();
+    // QTest::addRow("message empty") << QString();
 
     for (int i = 1; i <= 2048; i *= 2) {
         QTest::addRow("message-x-%d", i) << QString(i, QLatin1Char('x'));
@@ -73,7 +73,7 @@ void tst_SimpleTest::testSimple()
     QVERIFY(primary.waitForStarted());
     QCOMPARE(primary.state(), QProcess::Running);
     output.clear();
-    ok = QTest::qWaitFor([&](){
+    ok = QTest::qWaitFor([&]() {
         output += primary.readAllStandardOutput();
         return output == "Primary\n";
     });
@@ -86,7 +86,7 @@ void tst_SimpleTest::testSimple()
     QCOMPARE(secondary.state(), QProcess::Running);
 
     output.clear();
-    ok = QTest::qWaitFor([&](){
+    ok = QTest::qWaitFor([&]() {
         output += secondary.readAllStandardOutput();
         return output == "Secondary\n";
     });
@@ -99,7 +99,7 @@ void tst_SimpleTest::testSimple()
 
     output.clear();
     const QByteArray expected = "MESSAGE: >" + message.toUtf8() + "<\n";
-    ok = QTest::qWaitFor([&](){
+    ok = QTest::qWaitFor([&]() {
         output += primary.readAllStandardOutput();
         return output == expected;
     });

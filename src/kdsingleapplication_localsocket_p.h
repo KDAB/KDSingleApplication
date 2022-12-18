@@ -41,7 +41,10 @@ QT_END_NAMESPACE
 
 struct QObjectDeleteLater
 {
-    void operator()(QObject *o) { o->deleteLater(); }
+    void operator()(QObject *o)
+    {
+        o->deleteLater();
+    }
 };
 
 class QObjectConnectionHolder
@@ -50,7 +53,9 @@ class QObjectConnectionHolder
     QMetaObject::Connection c;
 
 public:
-    QObjectConnectionHolder() {}
+    QObjectConnectionHolder()
+    {
+    }
 
     explicit QObjectConnectionHolder(QMetaObject::Connection c)
         : c(std::move(c))
@@ -64,7 +69,8 @@ public:
 
     QObjectConnectionHolder(QObjectConnectionHolder &&other) noexcept
         : c(std::exchange(other.c, {}))
-    {}
+    {
+    }
 
     QObjectConnectionHolder &operator=(QObjectConnectionHolder &&other) noexcept
     {
@@ -110,7 +116,8 @@ private:
     std::unique_ptr<QLockFile> m_lockFile; // protects m_localServer
     std::unique_ptr<QLocalServer> m_localServer;
 
-    struct Connection {
+    struct Connection
+    {
         explicit Connection(QLocalSocket *s);
 
         std::unique_ptr<QLocalSocket, QObjectDeleteLater> socket;

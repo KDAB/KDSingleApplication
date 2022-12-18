@@ -60,8 +60,8 @@ KDSingleApplicationLocalSocket::KDSingleApplicationLocalSocket(const QString &na
 #if defined(Q_OS_UNIX)
     /* cppcheck-suppress useInitializationList */
     m_socketName = QStringLiteral("kdsingleapp-%1-%2-%3")
-            .arg(::getuid())
-            .arg(qEnvironmentVariable("XDG_SESSION_ID"), name);
+                       .arg(::getuid())
+                       .arg(qEnvironmentVariable("XDG_SESSION_ID"), name);
 #elif defined(Q_OS_WIN)
     // I'm not sure of a "global session identifier" on Windows; are
     // multiple logins from the same user a possibility? For now, following this:
@@ -71,14 +71,14 @@ KDSingleApplicationLocalSocket::KDSingleApplicationLocalSocket(const QString &na
     BOOL haveSessionId = ProcessIdToSessionId(GetCurrentProcessId(), &sessionId);
 
     m_socketName = QString::fromUtf8("kdsingleapp-%1-%2")
-            .arg(haveSessionId ? sessionId : 0)
-            .arg(name);
+                       .arg(haveSessionId ? sessionId : 0)
+                       .arg(name);
 #else
 #error "KDSingleApplication has not been ported to this platform"
 #endif
 
     const QString lockFilePath =
-            QDir::tempPath() + QLatin1Char('/') + m_socketName + QLatin1String(".lock");
+        QDir::tempPath() + QLatin1Char('/') + m_socketName + QLatin1String(".lock");
 
     qCDebug(kdsaLocalSocket) << "Socket name is" << m_socketName;
     qCDebug(kdsaLocalSocket) << "Lock file path is" << lockFilePath;
@@ -152,7 +152,8 @@ bool KDSingleApplicationLocalSocket::sendMessage(const QByteArray &message, int 
         socket.write(encodedMessage);
     }
 
-    qCDebug(kdsaLocalSocket) << "Wrote message in the socket" << "Timer remaining" << deadline.remainingTime() << "Expired?" << deadline.hasExpired();
+    qCDebug(kdsaLocalSocket) << "Wrote message in the socket"
+                             << "Timer remaining" << deadline.remainingTime() << "Expired?" << deadline.hasExpired();
 
     // There is no acknowledgement mechanism here.
     // Should there be one?
@@ -162,7 +163,8 @@ bool KDSingleApplicationLocalSocket::sendMessage(const QByteArray &message, int 
             return false;
     }
 
-    qCDebug(kdsaLocalSocket) << "Bytes written, now disconnecting" << "Timer remaining" << deadline.remainingTime() << "Expired?" << deadline.hasExpired();
+    qCDebug(kdsaLocalSocket) << "Bytes written, now disconnecting"
+                             << "Timer remaining" << deadline.remainingTime() << "Expired?" << deadline.hasExpired();
 
     socket.disconnectFromServer();
 
@@ -188,16 +190,16 @@ void KDSingleApplicationLocalSocket::handleNewConnection()
     Connection c(socket);
 
     c.readDataConnection = QObjectConnectionHolder(
-                connect(c.socket.get(), &QLocalSocket::readyRead,
-                        this, &KDSingleApplicationLocalSocket::readDataFromSecondary));
+        connect(c.socket.get(), &QLocalSocket::readyRead,
+                this, &KDSingleApplicationLocalSocket::readDataFromSecondary));
 
     c.secondaryDisconnectedConnection = QObjectConnectionHolder(
-                connect(c.socket.get(), &QLocalSocket::disconnected,
-                        this, &KDSingleApplicationLocalSocket::secondaryDisconnected));
+        connect(c.socket.get(), &QLocalSocket::disconnected,
+                this, &KDSingleApplicationLocalSocket::secondaryDisconnected));
 
     c.abortConnection = QObjectConnectionHolder(
-                connect(c.timeoutTimer.get(), &QTimer::timeout,
-                        this, &KDSingleApplicationLocalSocket::abortConnectionToSecondary));
+        connect(c.timeoutTimer.get(), &QTimer::timeout,
+                this, &KDSingleApplicationLocalSocket::abortConnectionToSecondary));
 
     m_clients.push_back(std::move(c));
 
@@ -210,7 +212,7 @@ void KDSingleApplicationLocalSocket::handleNewConnection()
         secondarySocketDisconnected(socket);
 }
 
-template <typename Container>
+template<typename Container>
 static auto findConnectionBySocket(Container &container, QLocalSocket *socket)
 {
     auto i = std::find_if(container.begin(),
@@ -220,7 +222,7 @@ static auto findConnectionBySocket(Container &container, QLocalSocket *socket)
     return i;
 }
 
-template <typename Container>
+template<typename Container>
 static auto findConnectionByTimer(Container &container, QTimer *timer)
 {
     auto i = std::find_if(container.begin(),

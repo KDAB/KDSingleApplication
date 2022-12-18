@@ -46,7 +46,7 @@ int main(int argc, char **argv)
 
     QCoreApplication app(argc, argv);
 
-    const int delay = (int)QRandomGenerator::global()->bounded(100, 200);
+    const int delay = ( int )QRandomGenerator::global()->bounded(100, 200);
     QThread::msleep(delay);
 
     const QString appName = QLatin1String("stresstest2-") + app.arguments().at(1);
@@ -60,14 +60,13 @@ int main(int argc, char **argv)
         --counter;
 
         QObject::connect(&kdsa, &KDSingleApplication::messageReceived,
-                         [&counter]()
-        {
-            --counter;
-            if (counter == 0)
-                qApp->quit();
-        });
+                         [&counter]() {
+                             --counter;
+                             if (counter == 0)
+                                 qApp->quit();
+                         });
 
-        QTimer::singleShot(timeout, [&counter](){
+        QTimer::singleShot(timeout, [&counter]() {
             std::cerr << "Primary time out, still " << counter << " secondaries" << std::endl;
             qApp->exit(1);
         });

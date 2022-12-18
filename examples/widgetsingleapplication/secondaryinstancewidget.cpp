@@ -67,7 +67,6 @@ void SecondaryInstanceWidget::sendMessage()
             QMessageBox::warning(this,
                                  tr("Error sending message"),
                                  tr("The message '%1' could not be sent to the primary.").arg(message));
-
         }
     }
 }

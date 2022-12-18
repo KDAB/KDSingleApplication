@@ -53,11 +53,11 @@ int main(int argc, char **argv)
 
         QObject::connect(&kdsa, &KDSingleApplication::messageReceived,
                          [](const QByteArray &message) {
-            std::cout << "MESSAGE: >"  << message.constData() << '<' << std::endl;
-            qApp->quit();
-        });
+                             std::cout << "MESSAGE: >" << message.constData() << '<' << std::endl;
+                             qApp->quit();
+                         });
 
-        QTimer::singleShot(5000, [](){ qApp->exit(1); });
+        QTimer::singleShot(5000, []() { qApp->exit(1); });
 
         return app.exec();
     } else {
