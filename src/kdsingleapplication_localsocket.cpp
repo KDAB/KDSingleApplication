@@ -58,6 +58,7 @@ KDSingleApplicationLocalSocket::KDSingleApplicationLocalSocket(const QString &na
     : QObject(parent)
 {
 #if defined(Q_OS_UNIX)
+    /* cppcheck-suppress useInitializationList */
     m_socketName = QStringLiteral("kdsingleapp-%1-%2-%3")
             .arg(::getuid())
             .arg(qEnvironmentVariable("XDG_SESSION_ID"), name);
