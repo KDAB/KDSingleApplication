@@ -1,0 +1,19 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: KDSingleApplication
+Upstream-Contact:  <info@kdab.com>
+Source: https://www.github.com/KDAB/KDSingleApplication
+
+#misc source code
+#Files:
+#Copyright: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+#License: MIT
+
+#misc documentation
+Files: README.md
+Copyright: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+License: MIT
+
+#misc config files
+Files: .clang-format .gitignore .gitreview .krazy .pre-commit-config.yaml .travis.yml
+Copyright: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+License: MIT

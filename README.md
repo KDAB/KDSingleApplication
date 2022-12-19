@@ -20,7 +20,7 @@ for inspiration. Basically it involves:
 Licensing
 =========
 KDSingleApplication is (C) 2019-2021, Klarälvdalens Datakonsult AB, and is available
-under the terms of the MIT license (see LICENSE.MIT.txt).
+under the terms of the MIT license (see LICENSES/MIT.txt).
 
 Contact KDAB at <info@kdab.com> if you need different licensing options.
 
