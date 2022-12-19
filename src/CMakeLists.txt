@@ -58,7 +58,7 @@ include(CMakePackageConfigHelpers)
 
 write_basic_package_version_file(
     KDSingleApplicationConfigVersion.cmake
-    VERSION ${PACKAGE_VERSION}
+    VERSION ${PROJECT_VERSION}
     COMPATIBILITY AnyNewerVersion
     )
 

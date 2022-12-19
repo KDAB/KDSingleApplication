@@ -24,9 +24,9 @@ set(CMAKE_AUTOMOC ON)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-option(OPTION_DEVELOPER_MODE "Developer Mode" OFF)
+option(${PROJECT_NAME}_DEVELOPER_MODE "Developer Mode" OFF)
 option(${PROJECT_NAME}_TESTS "Build the tests" OFF)
-option(${PROJECT_NAME}_EXAMPLES "Build the examples" OFF)
+option(${PROJECT_NAME}_EXAMPLES "Build the examples" ON)
 option(${PROJECT_NAME}_STATIC "Build lib as shared" OFF)
 
 add_definitions(-DQT_NO_CAST_TO_ASCII
@@ -44,16 +44,16 @@ add_definitions(-DQT_NO_CAST_TO_ASCII
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-if (NOT WIN32)
-    # Strict iterators can't be used on Windows, they lead to a link error
-    # when application code iterates over a QVector<QPoint> for instance, unless
-    # Qt itself was also built with strict iterators.
+if (NOT MSVC)
+    # Strict iterators can't be used on Windows with MSVC (for Qt<5.13) as they lead
+    # to a link error when application code iterates over a QVector<QPoint> for instance,
+    # unless Qt itself was also built with strict iterators.
     # See example at https://bugreports.qt.io/browse/AUTOSUITE-946
     add_definitions(-DQT_STRICT_ITERATORS)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wunused-parameter")
 endif()
 
-if (OPTION_DEVELOPER_MODE)
+if (${PROJECT_NAME}_DEVELOPER_MODE)
     add_definitions(-DQT_FORCE_ASSERTS)
     if (NOT MSVC)
         add_compile_options(-Wall -Wextra -Werror)
