@@ -8,3 +8,5 @@ EXCLUDE strings,explicit,normalize,passbyvalue,operators,nullstrcompare,nullstra
 #exclude more checks
 EXCLUDE qminmax,captruefalse
 EXCLUDE style
+
+SKIP \.cmake-format\.py

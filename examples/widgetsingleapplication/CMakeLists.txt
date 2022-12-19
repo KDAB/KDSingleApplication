@@ -7,8 +7,10 @@
 # Contact KDAB at <info@kdab.com> for commercial licensing options.
 #
 set(widgetsingleapplication_SRCS main.cpp primaryinstancewidget.cpp secondaryinstancewidget.cpp)
-add_executable(widgetsingleapplication ${widgetsingleapplication_SRCS})
-target_link_libraries(widgetsingleapplication
-	Qt5::Widgets
-	kdsingleapplication
+add_executable(
+    widgetsingleapplication
+    ${widgetsingleapplication_SRCS}
+)
+target_link_libraries(
+    widgetsingleapplication Qt5::Widgets kdsingleapplication
 )
