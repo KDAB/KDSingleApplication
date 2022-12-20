@@ -1,10 +1,10 @@
-KDSingleApplication
-===================
+# KDSingleApplication
+
 `KDSingleApplication` is a helper class for single-instance policy applications
 written by KDAB.
 
-Usage
-=====
+## Usage
+
 Currently the documentation is woefully lacking, but see the examples or tests
 for inspiration. Basically it involves:
 
@@ -17,22 +17,22 @@ for inspiration. Basically it involves:
     * the *secondary* instances can send messages to the primary instance
       by calling `sendMessage`.
 
-Licensing
-=========
+## Licensing
+
 KDSingleApplication is (C) 2019-2021, Klarälvdalens Datakonsult AB, and is available
 under the terms of the MIT license (see LICENSES/MIT.txt).
 
 Contact KDAB at <info@kdab.com> if you need different licensing options.
 
-Get Involved
-============
+## Get Involved
+
 KDAB will happily accept external contributions.
 
 Please submit your contributions or issue reports from our GitHub space at
 <https://github.com/KDAB/KDSingleApplication>.
 
-About KDAB
-==========
+## About KDAB
+
 KDSingleApplication is supported and maintained by Klarälvdalens Datakonsult AB (KDAB).
 
 The KDAB Group is the global No.1 software consultancy for Qt, C++ and
@@ -44,7 +44,7 @@ We continue to help develop parts of Qt and are one of the major contributors
 to the Qt Project. We can give advanced or standard trainings anywhere
 around the globe on Qt as well as C++, OpenGL, 3D and more.
 
-Please visit https://www.kdab.com to meet the people who write code like this.
+Please visit <https://www.kdab.com> to meet the people who write code like this.
 
 Stay up-to-date with KDAB product announcements:
 
