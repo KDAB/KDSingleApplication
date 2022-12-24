@@ -17,3 +17,8 @@ License: MIT
 Files: .clang-format .cmake-format.py .gitignore .gitreview .krazy .mdlrc .mdlrc.rb .pre-commit-config.yaml appveyor.yml
 Copyright: 2019-2022 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
 License: MIT
+
+#3rdparty
+Files: cmake/ECM/modules/*
+Copyright: The KDE Project
+License: BSD-3-Clause

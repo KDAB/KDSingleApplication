@@ -10,3 +10,5 @@ EXCLUDE qminmax,captruefalse
 EXCLUDE style
 
 SKIP \.cmake-format\.py
+#skip the borrowed code in the cmake subdir
+SKIP /cmake/ECM/|/cmake/KDAB/

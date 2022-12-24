@@ -19,6 +19,8 @@ project(
 cmake_policy(SET CMP0020 NEW)
 cmake_policy(SET CMP0042 NEW)
 
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/ECM/modules")
+
 find_package(Qt5Widgets)
 find_package(Qt5Network)
 
@@ -73,3 +75,6 @@ endif()
 if(${PROJECT_NAME}_EXAMPLES)
     add_subdirectory(examples)
 endif()
+
+# Add uninstall target
+include(ECMUninstallTarget)
