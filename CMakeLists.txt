@@ -66,6 +66,15 @@ if(${PROJECT_NAME}_DEVELOPER_MODE)
     endif()
 endif()
 
+if(CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
+    set(${PROJECT_NAME}_IS_ROOT_PROJECT TRUE)
+else()
+    #Always disable tests, examples, docs when used as a submodule
+    set(${PROJECT_NAME}_IS_ROOT_PROJECT FALSE)
+    set(${PROJECT_NAME}_TESTS FALSE)
+    set(${PROJECT_NAME}_EXAMPLES FALSE)
+endif()
+
 add_subdirectory(src)
 if(${PROJECT_NAME}_TESTS)
     enable_testing()
@@ -76,5 +85,7 @@ if(${PROJECT_NAME}_EXAMPLES)
     add_subdirectory(examples)
 endif()
 
-# Add uninstall target
-include(ECMUninstallTarget)
+if(${PROJECT_NAME}_IS_ROOT_PROJECT)
+    # Add uninstall target (not for submodules since parent projects typically have uninstall too)
+    include(ECMUninstallTarget)
+endif()
