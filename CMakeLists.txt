@@ -60,6 +60,28 @@ option(${PROJECT_NAME}_STATIC "Build lib as shared" OFF)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/ECM/modules")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/KDAB/modules")
 
+# Set a default build type if none was specified
+set(default_build_type "Release")
+if(EXISTS "${CMAKE_SOURCE_DIR}/.git" OR ${PROJECT_NAME}_DEVELOPER_MODE)
+    set(default_build_type "Debug")
+endif()
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+    message(STATUS "Setting build type to ${default_build_type} as none was specified.")
+    set(CMAKE_BUILD_TYPE
+        "${default_build_type}"
+        CACHE STRING "Choose the type of build." FORCE
+    )
+    # Set the possible values of build type for cmake-gui
+    set_property(
+        CACHE CMAKE_BUILD_TYPE
+        PROPERTY STRINGS
+                 "Debug"
+                 "Release"
+                 "MinSizeRel"
+                 "RelWithDebInfo"
+    )
+endif()
+
 set(Qt_VERSION_MAJOR 5)
 set(${PROJECT_NAME}_LIBRARY_QTID "")
 find_package(Qt5Widgets)
@@ -111,6 +133,10 @@ include(KDInstallLocation)
 if(CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
     set(${PROJECT_NAME}_IS_ROOT_PROJECT TRUE)
 
+    message(STATUS "Building ${PROJECT_NAME} ${${PROJECT_NAME}_VERSION} in ${CMAKE_BUILD_TYPE} mode. "
+                   "Installing to ${CMAKE_INSTALL_PREFIX}"
+    )
+
     install(FILES LICENSE.txt README.md DESTINATION ${INSTALL_DOC_DIR})
     install(DIRECTORY LICENSES DESTINATION ${INSTALL_DOC_DIR})
 else()
@@ -122,6 +148,7 @@ else()
 endif()
 
 add_subdirectory(src)
+
 if(${PROJECT_NAME}_TESTS)
     enable_testing()
     add_definitions(-DKDSINGLEAPPLICATION_BINARY_DIR="${CMAKE_BINARY_DIR}/bin/")
