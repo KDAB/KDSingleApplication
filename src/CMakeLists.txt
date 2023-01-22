@@ -71,4 +71,12 @@ if(${PROJECT_NAME}_IS_ROOT_PROJECT)
                   "${CMAKE_CURRENT_BINARY_DIR}/KDSingleApplicationConfigVersion.cmake"
             DESTINATION "${INSTALL_LIBRARY_DIR}/cmake/KDSingleApplication"
     )
+
+    if(MSVC AND NOT ${PROJECT_NAME}_STATIC)
+        install(
+            FILES "$<TARGET_PDB_FILE_DIR:kdsingleapplication>/$<TARGET_PDB_FILE_NAME:kdsingleapplication>"
+            DESTINATION ${INSTALL_LIBRARY_DIR}
+            CONFIGURATIONS Debug RelWithDebInfo
+        )
+    endif()
 endif()
