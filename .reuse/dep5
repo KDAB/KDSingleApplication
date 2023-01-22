@@ -9,12 +9,17 @@ Source: https://www.github.com/KDAB/KDSingleApplication
 #License: MIT
 
 #misc documentation
-Files: README.md
+Files: README.md docs/api/*.html
 Copyright: 2019-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
 License: MIT
 
 #misc config files
-Files: .clang-format .cmake-format.py .gitignore .gitreview .krazy .mdlrc .mdlrc.rb .pre-commit-config.yaml appveyor.yml
+Files: .clang-format .cmake-format.py .gitignore .gitreview .krazy .mdlrc .mdlrc.rb .pre-commit-config.yaml appveyor.yml docs/api/Doxyfile.cmake
+Copyright: 2019-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+License: MIT
+
+#artwork
+Files: docs/api/*.png
 Copyright: 2019-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
 License: MIT
 

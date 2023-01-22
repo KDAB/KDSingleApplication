@@ -1,7 +1,7 @@
 # KDSingleApplication
 
 `KDSingleApplication` is a helper class for single-instance policy applications
-written by KDAB.
+written by [KDAB](https://www.kdab.com).
 
 ## Usage
 
@@ -20,7 +20,7 @@ for inspiration. Basically it involves:
 ## Licensing
 
 KDSingleApplication is (C) 2019-2023, Klarälvdalens Datakonsult AB, and is available
-under the terms of the MIT license (see LICENSES/MIT.txt).
+under the terms of the [MIT license](LICENSES/MIT.txt).
 
 Contact KDAB at <info@kdab.com> if you need different licensing options.
 
