@@ -23,9 +23,7 @@ add_library(
     KDAB::kdsingleapplication ALIAS kdsingleapplication
 )
 
-include(GNUInstallDirs)
-
-set(KDSINGLEAPPLICATION_INCLUDEDIR ${CMAKE_INSTALL_INCLUDEDIR}/kdsingleapplication)
+set(KDSINGLEAPPLICATION_INCLUDEDIR ${INSTALL_INCLUDE_DIR}/kdsingleapplication)
 
 target_include_directories(
     kdsingleapplication
@@ -48,9 +46,9 @@ install(
 install(
     TARGETS kdsingleapplication
     EXPORT kdsingleapplicationTargets
-    RUNTIME DESTINATION bin
-    LIBRARY DESTINATION lib
-    ARCHIVE DESTINATION lib
+    RUNTIME DESTINATION ${INSTALL_RUNTIME_DIR}
+    LIBRARY DESTINATION ${INSTALL_LIBRARY_DIR}
+    ARCHIVE DESTINATION ${INSTALL_ARCHIVE_DIR}
 )
 
 include(CMakePackageConfigHelpers)
@@ -65,11 +63,11 @@ install(
     EXPORT kdsingleapplicationTargets
     FILE KDSingleApplicationTargets.cmake
     NAMESPACE KDAB::
-    DESTINATION lib/cmake/KDSingleApplication
+    DESTINATION "${INSTALL_LIBRARY_DIR}/cmake/KDSingleApplication"
 )
 configure_file(KDSingleApplicationConfig.cmake.in KDSingleApplicationConfig.cmake @ONLY)
 install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/KDSingleApplicationConfig.cmake"
           "${CMAKE_CURRENT_BINARY_DIR}/KDSingleApplicationConfigVersion.cmake"
-    DESTINATION lib/cmake/KDSingleApplication
+    DESTINATION "${INSTALL_LIBRARY_DIR}/cmake/KDSingleApplication"
 )
