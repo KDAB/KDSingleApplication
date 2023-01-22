@@ -51,23 +51,24 @@ install(
     ARCHIVE DESTINATION ${INSTALL_ARCHIVE_DIR}
 )
 
-include(CMakePackageConfigHelpers)
+if(${PROJECT_NAME}_IS_ROOT_PROJECT)
+    include(CMakePackageConfigHelpers)
 
-write_basic_package_version_file(
-    KDSingleApplicationConfigVersion.cmake
-    VERSION ${PROJECT_VERSION}
-    COMPATIBILITY AnyNewerVersion
-)
+    write_basic_package_version_file(
+        KDSingleApplicationConfigVersion.cmake
+        VERSION ${PROJECT_VERSION}
+        COMPATIBILITY AnyNewerVersion
+    )
 
-install(
-    EXPORT kdsingleapplicationTargets
-    FILE KDSingleApplicationTargets.cmake
-    NAMESPACE KDAB::
-    DESTINATION "${INSTALL_LIBRARY_DIR}/cmake/KDSingleApplication"
-)
-configure_file(KDSingleApplicationConfig.cmake.in KDSingleApplicationConfig.cmake @ONLY)
-install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/KDSingleApplicationConfig.cmake"
-          "${CMAKE_CURRENT_BINARY_DIR}/KDSingleApplicationConfigVersion.cmake"
-    DESTINATION "${INSTALL_LIBRARY_DIR}/cmake/KDSingleApplication"
-)
+    install(
+        EXPORT kdsingleapplicationTargets
+        FILE KDSingleApplicationTargets.cmake
+        NAMESPACE KDAB::
+        DESTINATION "${INSTALL_LIBRARY_DIR}/cmake/KDSingleApplication"
+    )
+    configure_file(KDSingleApplicationConfig.cmake.in KDSingleApplicationConfig.cmake @ONLY)
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/KDSingleApplicationConfig.cmake"
+                  "${CMAKE_CURRENT_BINARY_DIR}/KDSingleApplicationConfigVersion.cmake"
+            DESTINATION "${INSTALL_LIBRARY_DIR}/cmake/KDSingleApplication"
+    )
+endif()
