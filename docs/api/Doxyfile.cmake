@@ -957,8 +957,7 @@ EXAMPLE_RECURSIVE      = NO
 # that contain images that are to be included in the documentation (see the
 # \image command).
 
-IMAGE_PATH             = "@CMAKE_SOURCE_DIR@/images" \
-                         "@CMAKE_CURRENT_SOURCE_DIR@"
+IMAGE_PATH             =
 
 # The INPUT_FILTER tag can be used to specify a program that doxygen should
 # invoke to filter for each input file. Doxygen will invoke the filter program
@@ -2215,8 +2214,7 @@ SKIP_FUNCTION_MACROS   = YES
 TAGFILES               = "@QDOC_TAG_DIR@/qtcore/qtcore.tags=https://doc.qt.io/qt-5/" \
                          "@QDOC_TAG_DIR@/qtgui/qtgui.tags=https://doc.qt.io/qt-5/" \
                          "@QDOC_TAG_DIR@/qtwidgets/qtwidgets.tags=https://doc.qt.io/qt-5/" \
-                         "@QDOC_TAG_DIR@/qtprintsupport/qtprintsupport.tags=https://doc.qt.io/qt-5/" \
-                         "@QDOC_TAG_DIR@/qtxml/qtxml.tags=https://doc.qt.io/qt-5/"
+                         "@QDOC_TAG_DIR@/qtnetwork/qtnetwork.tags=https://doc.qt.io/qt-5/"
 
 # When a file name is specified after GENERATE_TAGFILE, doxygen will create a
 # tag file that is based on the input files it reads. See section "Linking to
