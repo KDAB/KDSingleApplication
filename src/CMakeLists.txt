@@ -52,14 +52,6 @@ install(
 )
 
 if(${PROJECT_NAME}_IS_ROOT_PROJECT)
-    include(CMakePackageConfigHelpers)
-
-    write_basic_package_version_file(
-        KDSingleApplicationConfigVersion.cmake
-        VERSION ${PROJECT_VERSION}
-        COMPATIBILITY AnyNewerVersion
-    )
-
     install(
         EXPORT kdsingleapplicationTargets
         FILE KDSingleApplicationTargets.cmake
@@ -80,3 +72,23 @@ if(${PROJECT_NAME}_IS_ROOT_PROJECT)
         )
     endif()
 endif()
+
+# Generate library version files
+include(ECMSetupVersion)
+ecm_setup_version(
+    ${${PROJECT_NAME}_VERSION}
+    VARIABLE_PREFIX
+    KDSINGLEAPPLICATION
+    VERSION_HEADER
+    "${CMAKE_CURRENT_BINARY_DIR}/kdsingleapplication_version.h"
+    PACKAGE_VERSION_FILE
+    "${CMAKE_CURRENT_BINARY_DIR}/KDSingleApplicationConfigVersion.cmake"
+    SOVERSION
+    ${${PROJECT_NAME}_SOVERSION}
+    COMPATIBILITY
+    AnyNewerVersion
+)
+install(
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/kdsingleapplication_version.h"
+    DESTINATION ${INSTALL_INCLUDE_DIR}/kdsingleapplication
+)

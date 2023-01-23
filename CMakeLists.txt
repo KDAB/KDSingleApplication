@@ -40,11 +40,19 @@ cmake_minimum_required(VERSION 3.12)
 
 project(
     KDSingleApplication
-    VERSION 0.1
     DESCRIPTION "KDSingleApplication is a helper class for single-instance policy applications written by KDAB"
     HOMEPAGE_URL "https://github.com/KDAB/KDSingleApplication"
     LANGUAGES CXX
 )
+
+set(${PROJECT_NAME}_VERSION_MAJOR 0)
+set(${PROJECT_NAME}_VERSION_MINOR 99)
+set(${PROJECT_NAME}_VERSION_PATCH 0)
+set(${PROJECT_NAME}_VERSION
+    ${${PROJECT_NAME}_VERSION_MAJOR}.${${PROJECT_NAME}_VERSION_MINOR}.${${PROJECT_NAME}_VERSION_PATCH}
+)
+set(PROJECT_VERSION ${${PROJECT_NAME}_VERSION}) #PROJECT_VERSION is needed by some ECM modules
+set(${PROJECT_NAME}_SOVERSION "1.0")
 
 cmake_policy(SET CMP0020 NEW)
 cmake_policy(SET CMP0042 NEW)
