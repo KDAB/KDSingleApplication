@@ -12,5 +12,5 @@ add_executable(
     ${widgetsingleapplication_SRCS}
 )
 target_link_libraries(
-    widgetsingleapplication Qt5::Widgets kdsingleapplication
+    widgetsingleapplication Qt::Widgets kdsingleapplication
 )

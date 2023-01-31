@@ -14,5 +14,5 @@ add_executable(
     main.cpp
 )
 target_link_libraries(
-    simplesingleapp Qt5::Widgets kdsingleapplication
+    simplesingleapp Qt::Widgets kdsingleapplication
 )

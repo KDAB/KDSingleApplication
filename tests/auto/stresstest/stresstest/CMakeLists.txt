@@ -12,5 +12,5 @@ add_executable(
     ${stresstest_SRCS}
 )
 target_link_libraries(
-    stresstest Qt5::Widgets kdsingleapplication
+    stresstest Qt::Widgets kdsingleapplication
 )

@@ -35,7 +35,7 @@ if(WIN32)
     target_link_libraries(kdsingleapplication kernel32)
 endif()
 target_link_libraries(
-    kdsingleapplication Qt5::Core Qt5::Network
+    kdsingleapplication Qt::Core Qt::Network
 )
 
 install(

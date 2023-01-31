@@ -12,6 +12,10 @@
 # Pass the following variables to cmake to control the build:
 # (See INSTALL.txt for more information)
 #
+# -DKDSingleApplication_QT6=[true|false]
+#  Build against Qt6 rather than Qt5
+#  Default=false (Qt5 will be used even if Qt6 is available)
+#
 # -DKDSingleApplication_STATIC=[true|false]
 #  Build static versions of the libraries
 #  Default=false
@@ -59,11 +63,12 @@ cmake_policy(SET CMP0042 NEW)
 
 include(FeatureSummary)
 
+option(${PROJECT_NAME}_QT6 "Build against Qt 6" OFF)
 option(${PROJECT_NAME}_DEVELOPER_MODE "Developer Mode" OFF)
 option(${PROJECT_NAME}_TESTS "Build the tests" OFF)
 option(${PROJECT_NAME}_EXAMPLES "Build the examples" ON)
 option(${PROJECT_NAME}_DOCS "Build the API documentation" OFF)
-option(${PROJECT_NAME}_STATIC "Build lib as shared" OFF)
+option(${PROJECT_NAME}_STATIC "Build lib as static" OFF)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/ECM/modules")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/KDAB/modules")
@@ -90,10 +95,20 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
     )
 endif()
 
-set(Qt_VERSION_MAJOR 5)
 set(${PROJECT_NAME}_LIBRARY_QTID "")
-find_package(Qt5Widgets)
-find_package(Qt5Network)
+
+if(${PROJECT_NAME}_QT6)
+    find_package(QT NAMES Qt6 REQUIRED)
+else()
+    find_package(QT NAMES Qt5 REQUIRED)
+endif()
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Network Widgets)
+
+if(${PROJECT_NAME}_TESTS)
+    find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Test)
+endif()
+
+set(Qt_VERSION_MAJOR ${QT_VERSION_MAJOR}) # KDQtInstallPaths wants "Qt", not "QT"
 include(KDQtInstallPaths) #to set QT_INSTALL_FOO variables
 
 add_definitions(
@@ -154,7 +169,7 @@ if(CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
 
     # Generate .pri file for qmake users (except when using the VS generator)
     if(NOT CMAKE_CONFIGURATION_TYPES)
-        if(Qt_VERSION_MAJOR EQUAL 5 OR (Qt_VERSION_MAJOR EQUAL 6 AND Qt6Core_VERSION VERSION_GREATER "6.2"))
+        if(QT_VERSION_MAJOR EQUAL 5 OR (QT_VERSION_MAJOR EQUAL 6 AND Qt6Core_VERSION VERSION_GREATER "6.2"))
             include(ECMGeneratePriFile)
             set(PROJECT_VERSION_STRING ${${PROJECT_NAME}_VERSION})
             ecm_generate_pri_file(

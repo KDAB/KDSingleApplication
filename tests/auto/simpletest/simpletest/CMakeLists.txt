@@ -12,5 +12,5 @@ add_executable(
     ${simpletest_SRCS}
 )
 target_link_libraries(
-    simpletest Qt5::Widgets kdsingleapplication
+    simpletest Qt::Widgets kdsingleapplication
 )
