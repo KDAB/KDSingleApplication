@@ -169,33 +169,35 @@ void KDSingleApplicationLocalSocket::handleNewConnection()
 {
     Q_ASSERT(m_localServer);
 
-    QLocalSocket *socket = m_localServer->nextPendingConnection();
+    QLocalSocket *socket;
+    while ((socket = m_localServer->nextPendingConnection())) {
+        qCDebug(kdsaLocalSocket) << "Got new connection on" << m_socketName << "state" << socket->state();
 
-    qCDebug(kdsaLocalSocket) << "Got new connection on" << m_socketName << "state" << socket->state();
+        Connection c(std::move(socket));
+        socket = c.socket.get();
 
-    Connection c(socket);
+        c.readDataConnection = QObjectConnectionHolder(
+            connect(socket, &QLocalSocket::readyRead,
+                    this, &KDSingleApplicationLocalSocket::readDataFromSecondary));
 
-    c.readDataConnection = QObjectConnectionHolder(
-        connect(c.socket.get(), &QLocalSocket::readyRead,
-                this, &KDSingleApplicationLocalSocket::readDataFromSecondary));
+        c.secondaryDisconnectedConnection = QObjectConnectionHolder(
+            connect(socket, &QLocalSocket::disconnected,
+                    this, &KDSingleApplicationLocalSocket::secondaryDisconnected));
 
-    c.secondaryDisconnectedConnection = QObjectConnectionHolder(
-        connect(c.socket.get(), &QLocalSocket::disconnected,
-                this, &KDSingleApplicationLocalSocket::secondaryDisconnected));
+        c.abortConnection = QObjectConnectionHolder(
+            connect(c.timeoutTimer.get(), &QTimer::timeout,
+                    this, &KDSingleApplicationLocalSocket::abortConnectionToSecondary));
 
-    c.abortConnection = QObjectConnectionHolder(
-        connect(c.timeoutTimer.get(), &QTimer::timeout,
-                this, &KDSingleApplicationLocalSocket::abortConnectionToSecondary));
+        m_clients.push_back(std::move(c));
 
-    m_clients.push_back(std::move(c));
+        // Note that by the time we get here, the socket could've already been closed,
+        // and no signals emitted (hello, Windows!). Read what's already in the socket.
+        if (readDataFromSecondarySocket(socket))
+            return;
 
-    // Note that by the time we get here, the socket could've already been closed,
-    // and no signals emitted (hello, Windows!). Read what's already in the socket.
-    if (readDataFromSecondarySocket(socket))
-        return;
-
-    if (socket->state() == QLocalSocket::UnconnectedState)
-        secondarySocketDisconnected(socket);
+        if (socket->state() == QLocalSocket::UnconnectedState)
+            secondarySocketDisconnected(socket);
+    }
 }
 
 template<typename Container>
