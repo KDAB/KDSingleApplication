@@ -29,6 +29,9 @@ private Q_SLOTS:
 
     void testOnlyOnePrimary_data();
     void testOnlyOnePrimary();
+
+private:
+    bool m_isRunninginCI = false;
 };
 
 // The default timeouts don't seem to be enough
@@ -61,6 +64,24 @@ void tst_StressTest::initTestCase()
         }
     }
 #endif
+
+    // Avoid overloading the Windows VMs, or they'll time out
+#if defined(Q_OS_WIN)
+    m_isRunninginCI = []() {
+        bool ok;
+        const int ciBuild = qEnvironmentVariableIntValue("CI_BUILD", &ok);
+        if (!ok)
+            return true;
+        return ciBuild != 0;
+    }();
+#else
+    m_isRunninginCI = false;
+#endif
+
+    if (m_isRunninginCI)
+        qDebug() << "Running a subset of the tests to avoid overloading the CI. Set CI_BUILD=0 to override";
+    else
+        qDebug() << "Running full tests";
 }
 
 void tst_StressTest::testOnePrimaryManySecondaries()
@@ -78,8 +99,9 @@ void tst_StressTest::testOnePrimaryManySecondaries()
     const QString executable = QStringLiteral("stresstest/stresstest");
 #endif
 
-    const int secondariesCount = 50;
-    const int runsPerSecondary = 50;
+    const int secondariesCount = m_isRunninginCI ? 5 : 50;
+    const int runsPerSecondary = m_isRunninginCI ? 5 : 50;
+
     const QString testId = QString::number(QRandomGenerator::global()->generate());
     const int timeout = calculateTimeout(secondariesCount);
     const QString timeoutString = QString::number(timeout);
@@ -130,7 +152,8 @@ void tst_StressTest::testOnlyOnePrimary_data()
 {
     QTest::addColumn<int>("count");
 
-    for (int i = 10; i <= 100; i += 10)
+    const int totalCount = m_isRunninginCI ? 10 : 100;
+    for (int i = 10; i <= totalCount; i += 10)
         QTest::addRow("count-%d", i) << i;
 }
 

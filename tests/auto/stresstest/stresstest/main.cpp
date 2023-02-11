@@ -33,7 +33,7 @@ int main(int argc, char **argv)
     const QByteArrayList messages = {
         QByteArrayLiteral("secondary"),
         QByteArrayLiteral("secondary 123456"),
-        QByteArray(1024, 'x')
+        QByteArray(1024*10, 'x')
     };
 
     const QString appName = QLatin1String("stresstest-") + app.arguments().at(1);
