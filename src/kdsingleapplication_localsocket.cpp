@@ -74,8 +74,11 @@ KDSingleApplicationLocalSocket::KDSingleApplicationLocalSocket(const QString &na
 
     if (!lockFile->tryLock()) {
         // someone else has the lock => we're secondary
+        qCDebug(kdsaLocalSocket) << "Secondary instance";
         return;
     }
+
+    qCDebug(kdsaLocalSocket) << "Primary instance";
 
     std::unique_ptr<QLocalServer> server = std::make_unique<QLocalServer>();
     if (!server->listen(m_socketName)) {
@@ -126,8 +129,10 @@ bool KDSingleApplicationLocalSocket::sendMessage(const QByteArray &message, int 
 
     qCDebug(kdsaLocalSocket) << "Socket state:" << socket.state() << "Timer remaining" << deadline.remainingTime() << "Expired?" << deadline.hasExpired();
 
-    if (deadline.hasExpired())
+    if (deadline.hasExpired()) {
+        qCWarning(kdsaLocalSocket) << "Connection timed out";
         return false;
+    }
 
     socket.write(&LOCALSOCKET_PROTOCOL_VERSION, 1);
 
@@ -145,8 +150,10 @@ bool KDSingleApplicationLocalSocket::sendMessage(const QByteArray &message, int 
     // Should there be one?
 
     while (socket.bytesToWrite() > 0) {
-        if (!socket.waitForBytesWritten(deadline.remainingTime()))
+        if (!socket.waitForBytesWritten(deadline.remainingTime())) {
+            qCWarning(kdsaLocalSocket) << "Message to primary timed out";
             return false;
+        }
     }
 
     qCDebug(kdsaLocalSocket) << "Bytes written, now disconnecting"
@@ -154,11 +161,15 @@ bool KDSingleApplicationLocalSocket::sendMessage(const QByteArray &message, int 
 
     socket.disconnectFromServer();
 
-    if (socket.state() == QLocalSocket::UnconnectedState)
+    if (socket.state() == QLocalSocket::UnconnectedState) {
+        qCDebug(kdsaLocalSocket) << "Disconnected -- success!";
         return true;
+    }
 
-    if (!socket.waitForDisconnected(deadline.remainingTime()))
+    if (!socket.waitForDisconnected(deadline.remainingTime())) {
+        qCWarning(kdsaLocalSocket) << "Disconnection from primary timed out";
         return false;
+    }
 
     qCDebug(kdsaLocalSocket) << "Disconnected -- success!";
 
