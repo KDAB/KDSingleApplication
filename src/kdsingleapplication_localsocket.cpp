@@ -298,8 +298,8 @@ void KDSingleApplicationLocalSocket::abortConnectionToSecondary()
     qCDebug(kdsaLocalSocket) << "Secondary timed out. Data read:" << c.readData;
 }
 
-KDSingleApplicationLocalSocket::Connection::Connection(QLocalSocket *socket)
-    : socket(socket)
+KDSingleApplicationLocalSocket::Connection::Connection(QLocalSocket *_socket)
+    : socket(_socket)
     , timeoutTimer(new QTimer)
 {
     timeoutTimer->start(LOCALSOCKET_CONNECTION_TIMEOUT);
