@@ -79,12 +79,14 @@ cmake . -DCMAKE_INSTALL_PREFIX=/usr -DKDSingleApplication_QT6=True -DKDSingleApp
 
 %files devel
 %defattr(-,root,root,-)
+%if 0%{?fedora} > 35
+%{_libdir}/qt6/mkspecs/modules/*
+%endif
 %dir %{_includedir}/kdsingleapplication-qt6
-%{_includedir}/kdsingleapplication-qt6/kdsingleapplication/*
+%{_includedir}/kdsingleapplication-qt6/*
 %dir %{_libdir}/cmake/KDSingleApplication-qt6
 %{_libdir}/cmake/KDSingleApplication-qt6/*
 %{_libdir}/libkdsingleapplication-qt6.a
-#%{_prefix}/mkspecs/modules/* ECMGeneratePriFile isn't ported to Qt6 yet
 
 %changelog
 * Mon Jul 17 2023 Allen Winter <allen.winter@kdab.com> 1.0.0
