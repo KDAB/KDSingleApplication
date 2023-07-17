@@ -24,8 +24,6 @@ add_library(
 )
 set_target_properties(kdsingleapplication PROPERTIES OUTPUT_NAME "kdsingleapplication${KDSingleApplication_LIBRARY_QTID}")
 
-set(KDSINGLEAPPLICATION_INCLUDEDIR ${INSTALL_INCLUDE_DIR}/kdsingleapplication${KDSingleApplication_LIBRARY_QTID})
-
 target_include_directories(
     kdsingleapplication
     PUBLIC $<INSTALL_INTERFACE:${KDSINGLEAPPLICATION_INCLUDEDIR}> $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
@@ -57,7 +55,7 @@ if(${PROJECT_NAME}_IS_ROOT_PROJECT)
         EXPORT kdsingleapplicationTargets
         FILE KDSingleApplicationTargets.cmake
         NAMESPACE KDAB::
-        DESTINATION "${INSTALL_LIBRARY_DIR}/cmake/KDSingleApplication"
+        DESTINATION ${INSTALL_LIBRARY_DIR}/cmake/KDSingleApplication${KDSingleApplication_LIBRARY_QTID}
     )
     configure_file(KDSingleApplicationConfig.cmake.in KDSingleApplication${KDSingleApplication_LIBRARY_QTID}Config.cmake @ONLY)
     install(FILES "${CMAKE_CURRENT_BINARY_DIR}/KDSingleApplication${KDSingleApplication_LIBRARY_QTID}Config.cmake"
@@ -102,7 +100,7 @@ ecm_setup_version(
 )
 install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/kdsingleapplication_version.h"
-    DESTINATION ${INSTALL_INCLUDE_DIR}/kdsingleapplication
+    DESTINATION ${KDSINGLEAPPLICATION_INCLUDEDIR}
 )
 install(
     EXPORT kdsingleapplicationTargets

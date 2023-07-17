@@ -153,6 +153,8 @@ endif()
 # setup default install locations
 include(KDInstallLocation)
 
+set(KDSINGLEAPPLICATION_INCLUDEDIR ${INSTALL_INCLUDE_DIR}/kdsingleapplication${KDSingleApplication_LIBRARY_QTID})
+
 if(CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
     set(${PROJECT_NAME}_IS_ROOT_PROJECT TRUE)
 
@@ -176,11 +178,11 @@ if(CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
                 BASE_NAME
                 KDSingleApplication
                 LIB_NAME
-                kdsingleapplication${${PROJECT_NAME}_LIBRARY_QTID}
+                kdsingleapplication${KDSingleApplication_LIBRARY_QTID}
                 FILENAME_VAR
                 pri_filename
                 INCLUDE_INSTALL_DIR
-                ${INSTALL_INCLUDE_DIR}
+                ${KDSINGLEAPPLICATION_INCLUDEDIR}
             )
             install(FILES ${pri_filename} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
         endif()
