@@ -95,13 +95,14 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
     )
 endif()
 
-set(${PROJECT_NAME}_LIBRARY_QTID "")
-
 if(${PROJECT_NAME}_QT6)
     find_package(QT NAMES Qt6 REQUIRED)
+    set(${PROJECT_NAME}_LIBRARY_QTID "-qt6")
 else()
     find_package(QT NAMES Qt5 REQUIRED)
+    set(${PROJECT_NAME}_LIBRARY_QTID "")
 endif()
+set(KDSingleApplication_LIBRARY_QTID ${${PROJECT_NAME}_LIBRARY_QTID})
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Network Widgets)
 
 if(${PROJECT_NAME}_TESTS)

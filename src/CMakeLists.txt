@@ -22,8 +22,9 @@ endif()
 add_library(
     KDAB::kdsingleapplication ALIAS kdsingleapplication
 )
+set_target_properties(kdsingleapplication PROPERTIES OUTPUT_NAME "kdsingleapplication${KDSingleApplication_LIBRARY_QTID}")
 
-set(KDSINGLEAPPLICATION_INCLUDEDIR ${INSTALL_INCLUDE_DIR}/kdsingleapplication)
+set(KDSINGLEAPPLICATION_INCLUDEDIR ${INSTALL_INCLUDE_DIR}/kdsingleapplication${KDSingleApplication_LIBRARY_QTID})
 
 target_include_directories(
     kdsingleapplication
@@ -58,10 +59,10 @@ if(${PROJECT_NAME}_IS_ROOT_PROJECT)
         NAMESPACE KDAB::
         DESTINATION "${INSTALL_LIBRARY_DIR}/cmake/KDSingleApplication"
     )
-    configure_file(KDSingleApplicationConfig.cmake.in KDSingleApplicationConfig.cmake @ONLY)
-    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/KDSingleApplicationConfig.cmake"
-                  "${CMAKE_CURRENT_BINARY_DIR}/KDSingleApplicationConfigVersion.cmake"
-            DESTINATION "${INSTALL_LIBRARY_DIR}/cmake/KDSingleApplication"
+    configure_file(KDSingleApplicationConfig.cmake.in KDSingleApplication${KDSingleApplication_LIBRARY_QTID}Config.cmake @ONLY)
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/KDSingleApplication${KDSingleApplication_LIBRARY_QTID}Config.cmake"
+                  "${CMAKE_CURRENT_BINARY_DIR}/KDSingleApplication${KDSingleApplication_LIBRARY_QTID}ConfigVersion.cmake"
+            DESTINATION "${INSTALL_LIBRARY_DIR}/cmake/KDSingleApplication${KDSingleApplication_LIBRARY_QTID}"
     )
 
     include(ECMGenerateHeaders)
@@ -93,7 +94,7 @@ ecm_setup_version(
     VERSION_HEADER
     "${CMAKE_CURRENT_BINARY_DIR}/kdsingleapplication_version.h"
     PACKAGE_VERSION_FILE
-    "${CMAKE_CURRENT_BINARY_DIR}/KDSingleApplicationConfigVersion.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/KDSingleApplication${KDSingleApplication_LIBRARY_QTID}ConfigVersion.cmake"
     SOVERSION
     ${${PROJECT_NAME}_SOVERSION}
     COMPATIBILITY
@@ -102,4 +103,10 @@ ecm_setup_version(
 install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/kdsingleapplication_version.h"
     DESTINATION ${INSTALL_INCLUDE_DIR}/kdsingleapplication
+)
+install(
+    EXPORT kdsingleapplicationTargets
+    FILE KDSingleApplication${KDSingleApplication_LIBRARY_QTID}Targets.cmake
+    NAMESPACE KDAB::
+    DESTINATION ${INSTALL_LIBRARY_DIR}/cmake/KDSingleApplication${KDSingleApplication_LIBRARY_QTID}
 )
