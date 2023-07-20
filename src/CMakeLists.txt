@@ -64,6 +64,17 @@ if(${PROJECT_NAME}_IS_ROOT_PROJECT)
             DESTINATION "${INSTALL_LIBRARY_DIR}/cmake/KDSingleApplication"
     )
 
+    include(ECMGenerateHeaders)
+    ecm_generate_headers(
+        kdsingleapplication_HEADERS
+        HEADER_NAMES
+        KDSingleApplication
+        OUTPUT_DIR
+        ${CMAKE_CURRENT_BINARY_DIR}/KDSingleApplication
+    )
+
+    install(FILES ${kdsingleapplication_HEADERS} DESTINATION ${INSTALL_INCLUDE_DIR}/kdsingleapplication)
+
     if(MSVC AND NOT ${PROJECT_NAME}_STATIC)
         install(
             FILES "$<TARGET_PDB_FILE_DIR:kdsingleapplication>/$<TARGET_PDB_FILE_NAME:kdsingleapplication>"
