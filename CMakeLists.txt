@@ -145,7 +145,7 @@ set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
 if(${PROJECT_NAME}_DEVELOPER_MODE)
     add_definitions(-DQT_FORCE_ASSERTS)
     if(NOT MSVC)
-        add_compile_options(-Wall -Wextra -Werror)
+        add_compile_options(-Wall -Wextra -Werror -Wshadow)
     endif()
 endif()
 
