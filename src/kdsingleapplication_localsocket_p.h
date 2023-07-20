@@ -43,8 +43,8 @@ public:
     {
     }
 
-    explicit QObjectConnectionHolder(QMetaObject::Connection c)
-        : c(std::move(c))
+    explicit QObjectConnectionHolder(QMetaObject::Connection _c)
+        : c(std::move(_c))
     {
     }
 
