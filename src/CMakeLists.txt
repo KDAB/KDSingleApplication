@@ -72,7 +72,7 @@ if(${PROJECT_NAME}_IS_ROOT_PROJECT)
         ${CMAKE_CURRENT_BINARY_DIR}/KDSingleApplication
     )
 
-    install(FILES ${kdsingleapplication_HEADERS} DESTINATION ${INSTALL_INCLUDE_DIR}/kdsingleapplication)
+    install(FILES ${kdsingleapplication_HEADERS} DESTINATION ${KDSINGLEAPPLICATION_INCLUDEDIR})
 
     if(MSVC AND NOT ${PROJECT_NAME}_STATIC)
         install(
