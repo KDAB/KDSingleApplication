@@ -49,8 +49,8 @@ project(
     LANGUAGES CXX
 )
 
-set(${PROJECT_NAME}_VERSION_MAJOR 0)
-set(${PROJECT_NAME}_VERSION_MINOR 99)
+set(${PROJECT_NAME}_VERSION_MAJOR 1)
+set(${PROJECT_NAME}_VERSION_MINOR 0)
 set(${PROJECT_NAME}_VERSION_PATCH 0)
 set(${PROJECT_NAME}_VERSION
     ${${PROJECT_NAME}_VERSION_MAJOR}.${${PROJECT_NAME}_VERSION_MINOR}.${${PROJECT_NAME}_VERSION_PATCH}
@@ -95,12 +95,14 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
     )
 endif()
 
-set(${PROJECT_NAME}_LIBRARY_QTID "")
-
 if(${PROJECT_NAME}_QT6)
     find_package(QT NAMES Qt6 REQUIRED)
+    set(${PROJECT_NAME}_LIBRARY_QTID "-qt6")
+    set(KDSingleApplication_LIBRARY_QTID ${${PROJECT_NAME}_LIBRARY_QTID})
 else()
     find_package(QT NAMES Qt5 REQUIRED)
+    set(${PROJECT_NAME}_LIBRARY_QTID "")
+    set(KDSingleApplication_LIBRARY_QTID "")
 endif()
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Network Widgets)
 
@@ -152,6 +154,8 @@ endif()
 # setup default install locations
 include(KDInstallLocation)
 
+set(KDSINGLEAPPLICATION_INCLUDEDIR ${INSTALL_INCLUDE_DIR}/kdsingleapplication${KDSingleApplication_LIBRARY_QTID})
+
 if(CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
     set(${PROJECT_NAME}_IS_ROOT_PROJECT TRUE)
 
@@ -175,11 +179,11 @@ if(CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
                 BASE_NAME
                 KDSingleApplication
                 LIB_NAME
-                kdsingleapplication${${PROJECT_NAME}_LIBRARY_QTID}
+                kdsingleapplication${KDSingleApplication_LIBRARY_QTID}
                 FILENAME_VAR
                 pri_filename
                 INCLUDE_INSTALL_DIR
-                ${INSTALL_INCLUDE_DIR}
+                ${KDSINGLEAPPLICATION_INCLUDEDIR}
             )
             install(FILES ${pri_filename} DESTINATION ${ECM_MKSPECS_INSTALL_DIR})
         endif()

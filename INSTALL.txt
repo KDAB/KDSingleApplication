@@ -1,0 +1,97 @@
+These are the instructions for installing KDSingleApplication using the CMake buildsystem.
+CMake version 3.12 or higher is required.
+
+Qt Version support:
+ * Qt5 and Qt6 is supported
+
+Also note that the code requires a C++14 compliant compiler,
+
+Please see the comments at the top of CMakeLists.txt for
+the available configuration options you can pass to cmake.
+
+The installation directory defaults to C:/Program Files (x86)/KDSingleApplication on Windows
+(you'll need admin privileges) and /usr/local on non-Windows.  You can change this
+location by passing the option -DCMAKE_INSTALL_PREFIX=/install/path to cmake.
+
+1) From the top directory of your KDSingleApplication installation create a build directory:
+
+     mkdir build
+
+   and change directory into that build directory:
+
+     cd build
+
+2) Now run 'cmake' depending on the kind of build one of the following:
+     cmake -DCMAKE_BUILD_TYPE=Debug ..
+     cmake -DCMAKE_BUILD_TYPE=Release ..
+     cmake -DKDSingleApplication_STATIC=True -DCMAKE_BUILD_TYPE=Debug ..
+     cmake -DKDSingleApplication_STATIC=True -DCMAKE_BUILD_TYPE=Release ..
+
+   To define the install-location use for example:
+     cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=C:/KDAB/kdsingleapplication ..
+     cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=/opt/kdsingleapplication ..
+
+3) Unix
+
+   set your LD_LIBRARY_PATH to point to your KDSingleApplication installation lib directory.
+
+   If you do not have LD_LIBRARY_PATH set already, then in your terminal run:
+    % LD_LIBRARY_PATH=/path/to/kdsingleapplication/lib:$LD_LIBRARY_PATH
+    % export LD_LIBRARY_PATH
+
+   The above must be added into your .bashrc or similar to remain. It may also of course
+   be run from a shell just before building software using KDSingleApplication, but in this case
+   your settings will only be available for this shell.
+
+4) MacOS
+
+   Proceed as described above, but using DYLD_LIBRARY_PATH instead of LD_LIBRARY_PATH
+
+5) Windows
+
+   For running executables, add the path to the KDSingleApplication dll (kdsingleapplication\bin) into your PATH.
+   eg. set PATH=C:\KDAB\kdsingleapplication\bin;%PATH%
+
+   For development, add the path to the KDSingleApplication lib (kdsingleapplication\lib) into your LIB environment.
+   eg. set LIB=C:\KDAB\kdsingleapplication\lib;%LIB%
+
+6) Build everything by typing:
+
+   From your top-level KDSingleApplication directory run:
+
+   % make    # Unix, Mac
+   % nmake   # Windows
+
+7) (optionally:) Install KDSingleApplication:
+
+   From your top-level KDSingleApplication directory run:
+
+   % make install   # Unix, Mac
+   % nmake install  # Windows
+
+   This will copy the necessary files into the sub-directories of your installation path:
+   For Unix/Linux, Mac: /usr/local
+   For Windows this is: C:\Program Files (x86)\KDSingleApplication
+
+8) Have a look at the examples applications. They will get you started with KDSingleApplication.
+
+== Testing ==
+To build the testing harness, pass -DKDSingleApplication_TESTS=true to CMake, like so:
+  % cmake -DKDSingleApplication_TESTS=true
+
+Then run 'make test' to run the unit tests.
+
+== Using ==
+From your CMake project, add
+
+    find_package(KDSingleApplication CONFIG REQUIRED)
+
+or for Qt6
+
+    find_package(KDSingleApplication-qt6 CONFIG REQUIRED)
+
+and link to the imported target KDAB::kdsingleapplication.
+That's all you need to do (the imported target also brings in the include directories)
+
+You may also need to point the CMAKE_PREFIX_PATH environment variable depending
+on where you installed KDSingleApplication.

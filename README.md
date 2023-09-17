@@ -17,6 +17,8 @@ for inspiration. Basically it involves:
     * the *secondary* instances can send messages to the primary instance
       by calling `sendMessage`.
 
+See [INSTALL.txt](INSTALL.txt) for installation instructions using CMake.
+
 ## Licensing
 
 KDSingleApplication is (C) 2019-2023, Klarälvdalens Datakonsult AB, and is available
