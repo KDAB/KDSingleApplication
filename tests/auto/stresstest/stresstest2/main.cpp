@@ -35,14 +35,14 @@ int main(int argc, char **argv)
     const int delay = ( int )QRandomGenerator::global()->bounded(100, 200);
     QThread::msleep(delay);
 
-    const QString appName = QLatin1String("stresstest2-") + app.arguments().at(1);
-    const int timeout = app.arguments().at(2).toInt();
+    const QString appName = QLatin1String("stresstest2-") + app.arguments().value(1);
+    const int timeout = app.arguments().value(2).toInt();
 
     KDSingleApplication kdsa(appName);
     if (kdsa.isPrimaryInstance()) {
         std::cout << "Primary" << std::endl;
 
-        int counter = app.arguments().at(3).toInt();
+        int counter = app.arguments().value(3).toInt();
         --counter;
 
         QObject::connect(&kdsa, &KDSingleApplication::messageReceived,
