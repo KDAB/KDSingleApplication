@@ -10,6 +10,7 @@
 
 #include <QtCore/QProcess>
 #include <QtCore/QRandomGenerator>
+#include <QtCore/QScopeGuard>
 #include <QtTest/QTest>
 
 #include <vector>
@@ -110,6 +111,11 @@ void tst_StressTest::testOnePrimaryManySecondaries()
     bool ok;
 
     QProcess primary;
+    auto cleanup = qScopeGuard([&primary] {
+        // QTests might return early and we might leave running process
+        primary.kill();
+        primary.waitForFinished();
+    });
     primary.setProcessChannelMode(QProcess::ForwardedErrorChannel);
     primary.start(executable, { testId, QStringLiteral("primary"), timeoutString, QString::number(secondariesCount * runsPerSecondary) });
     QVERIFY(primary.waitForStarted());
@@ -122,6 +128,13 @@ void tst_StressTest::testOnePrimaryManySecondaries()
     QVERIFY(ok);
 
     std::vector<std::unique_ptr<QProcess>> secondaries;
+    auto cleanupSecondaries = qScopeGuard([&secondaries] {
+        // QTests might return early and we might leave running process
+        for (auto &secondary : secondaries) {
+            secondary->kill();
+            secondary->waitForFinished();
+        }
+    });
     secondaries.reserve(secondariesCount);
     for (int i = 0; i < secondariesCount; ++i) {
         std::unique_ptr<QProcess> secondary = std::make_unique<QProcess>();
@@ -177,6 +190,13 @@ void tst_StressTest::testOnlyOnePrimary()
     const auto timeoutString = QString::number(timeout);
 
     std::vector<std::unique_ptr<QProcess>> processes;
+    auto cleanup = qScopeGuard([&processes] {
+        // QTests might return early and we might leave running process
+        for (auto &secondary : processes) {
+            secondary->kill();
+            secondary->waitForFinished();
+        }
+    });
     processes.reserve(count);
     for (int i = 0; i < count; ++i) {
         std::unique_ptr<QProcess> process = std::make_unique<QProcess>();

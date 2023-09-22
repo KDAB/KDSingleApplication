@@ -30,7 +30,7 @@ int main(int argc, char **argv)
 
     QCoreApplication app(argc, argv);
 
-    const QString appName = QLatin1String("simpletest-") + app.arguments().at(1);
+    const QString appName = QLatin1String("simpletest-") + app.arguments().value(1);
 
     KDSingleApplication kdsa(appName);
 
@@ -49,7 +49,7 @@ int main(int argc, char **argv)
     } else {
         std::cout << "Secondary" << std::endl;
 
-        if (!kdsa.sendMessage(app.arguments().at(2).toUtf8())) {
+        if (!kdsa.sendMessage(app.arguments().value(2).toUtf8())) {
             std::cerr << "Unable to send message to the primary!" << std::endl;
             return 1;
         }

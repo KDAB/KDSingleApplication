@@ -36,10 +36,10 @@ int main(int argc, char **argv)
         QByteArray(1024 * 10, 'x')
     };
 
-    const QString appName = QLatin1String("stresstest-") + app.arguments().at(1);
-    const QString mode = app.arguments().at(2);
-    const int timeout = app.arguments().at(3).toInt();
-    const int counter = app.arguments().at(4).toInt();
+    const QString appName = QLatin1String("stresstest-") + app.arguments().value(1);
+    const QString mode = app.arguments().value(2);
+    const int timeout = app.arguments().value(3).toInt();
+    const int counter = app.arguments().value(4).toInt();
 
     if (mode == QLatin1String("primary")) {
         KDSingleApplication kdsa(appName);
