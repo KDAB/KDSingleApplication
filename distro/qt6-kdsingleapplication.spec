@@ -12,18 +12,11 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Vendor:         Klaralvdalens Datakonsult AB (KDAB)
 Packager:       Klaralvdalens Datakonsult AB (KDAB) <info@kdab.com>
 
-BuildRequires: cmake
-%if %{defined suse_version}
-BuildRequires:  libqt6-qtbase-devel
-%endif
-
-%if %{defined fedora}
-BuildRequires:  gcc-c++ qt6-qtbase-devel
-%endif
-
-%if %{defined rhel}
-BuildRequires:  gcc-c++ qt6-qtbase-devel
-%endif
+BuildRequires:  gcc-c++
+BuildRequires:  cmake
+BuildRequires:  cmake(Qt6Core)
+BuildRequires:  cmake(Qt6Network)
+BuildRequires:  cmake(Qt6Widgets)
 
 %description
 KDSingleApplication is a helper class for Qt6 single-instance policy applications
