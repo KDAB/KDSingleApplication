@@ -2,7 +2,7 @@ Name:           qt6-kdsingleapplication
 Version:        1.0.0
 Release:        1
 Summary:        KDAB's helper class for Qt6 single-instance policy applications
-Source0:        %{name}-%{version}.tar.gz
+Source0:        kdsingleapplication-%{version}.tar.gz
 Source1:        %{name}-%{version}.tar.gz.asc
 Source2:        %{name}-rpmlintrc
 URL:            https://github.com/KDAB/KDSingleApplication
@@ -58,7 +58,7 @@ This package contains header files and associated tools and libraries to
 develop programs using kdsingleapplication.
 
 %prep
-%autosetup
+%autosetup -n kdsingleapplication-%{version}
 
 %build
 cmake . -DCMAKE_INSTALL_PREFIX=/usr -DKDSingleApplication_QT6=True -DKDSingleApplication_STATIC=True -DCMAKE_BUILD_TYPE=Release
