@@ -26,7 +26,7 @@ BuildRequires:  gcc-c++ qt6-qtbase-devel
 %endif
 
 %description
-KDSingleApplication is a helper class for Qt5 single-instance policy applications
+KDSingleApplication is a helper class for Qt6 single-instance policy applications
 written by KDAB.
 
 Currently the documentation is woefully lacking, but see the examples or tests
