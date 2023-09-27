@@ -25,6 +25,8 @@ QT_END_NAMESPACE
 #include <memory>
 #include <vector>
 
+#include "kdsingleapplication.h"
+
 struct QObjectDeleteLater
 {
     void operator()(QObject *o)
@@ -78,6 +80,7 @@ class KDSingleApplicationLocalSocket : public QObject
 
 public:
     explicit KDSingleApplicationLocalSocket(const QString &name,
+                                            KDSingleApplication::Options options,
                                             QObject *parent = nullptr);
     ~KDSingleApplicationLocalSocket();
 
