@@ -21,7 +21,7 @@
 class KDSingleApplicationPrivate
 {
 public:
-    explicit KDSingleApplicationPrivate(const QString &name, KDSingleApplication *q);
+    explicit KDSingleApplicationPrivate(const QString &name, KDSingleApplication::Options options, KDSingleApplication *q);
 
     QString name() const
     {
@@ -47,10 +47,10 @@ private:
     KDSingleApplicationLocalSocket m_impl;
 };
 
-KDSingleApplicationPrivate::KDSingleApplicationPrivate(const QString &name, KDSingleApplication *q)
+KDSingleApplicationPrivate::KDSingleApplicationPrivate(const QString &name, KDSingleApplication::Options options, KDSingleApplication *q)
     : q_ptr(q)
     , m_name(name)
-    , m_impl(name)
+    , m_impl(name, options)
 {
     if (Q_UNLIKELY(name.isEmpty()))
         qFatal("KDSingleApplication requires a non-empty application name");
@@ -73,7 +73,13 @@ KDSingleApplication::KDSingleApplication(QObject *parent)
 
 KDSingleApplication::KDSingleApplication(const QString &name, QObject *parent)
     : QObject(parent)
-    , d_ptr(new KDSingleApplicationPrivate(name, this))
+    , d_ptr(new KDSingleApplicationPrivate(name, Option::IncludeUsernameInSocketName | Option::IncludeSessionInSocketName, this))
+{
+}
+
+KDSingleApplication::KDSingleApplication(const QString &name, const Options options, QObject *parent)
+    : QObject(parent)
+    , d_ptr(new KDSingleApplicationPrivate(name, options, this))
 {
 }
 

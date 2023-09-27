@@ -29,39 +29,73 @@
 // for ::getuid()
 #include <sys/types.h>
 #include <unistd.h>
+#include <pwd.h>
 #endif
 
 #if defined(Q_OS_WIN)
 #include <qt_windows.h>
+#include <lmcons.h>
 #endif
+
+#include "kdsingleapplication.h"
 
 static const auto LOCALSOCKET_CONNECTION_TIMEOUT = std::chrono::seconds(5);
 static const char LOCALSOCKET_PROTOCOL_VERSION = 2;
 
 Q_LOGGING_CATEGORY(kdsaLocalSocket, "kdsingleapplication.localsocket", QtWarningMsg);
 
-KDSingleApplicationLocalSocket::KDSingleApplicationLocalSocket(const QString &name, QObject *parent)
+KDSingleApplicationLocalSocket::KDSingleApplicationLocalSocket(const QString &name, KDSingleApplication::Options options, QObject *parent)
     : QObject(parent)
 {
+
+    QString m_socketName = QStringLiteral("kdsingleapp");
+
 #if defined(Q_OS_UNIX)
     /* cppcheck-suppress useInitializationList */
-    m_socketName = QStringLiteral("kdsingleapp-%1-%2-%3")
-                       .arg(::getuid())
-                       .arg(qEnvironmentVariable("XDG_SESSION_ID"), name);
+    if (options.testFlag(KDSingleApplication::Option::IncludeUsernameInSocketName)) {
+        m_socketName += QStringLiteral("-");
+        uid_t uid = ::getuid();
+        struct passwd *pw = ::getpwuid(uid);
+        if (pw) {
+            QString username = QString::fromUtf8(pw->pw_name);
+            m_socketName += username;
+        } else {
+            m_socketName += QString::number(uid);
+        }
+    }
+    if (options.testFlag(KDSingleApplication::Option::IncludeSessionInSocketName)) {
+        QString sessionId = qEnvironmentVariable("XDG_SESSION_ID");
+        if (!sessionId.isEmpty()) {
+            m_socketName += QStringLiteral("-");
+            m_socketName += sessionId;
+        }
+    }
 #elif defined(Q_OS_WIN)
     // I'm not sure of a "global session identifier" on Windows; are
     // multiple logins from the same user a possibility? For now, following this:
     // https://docs.microsoft.com/en-us/windows/desktop/devnotes/getting-the-session-id-of-the-current-process
-
-    DWORD sessionId;
-    BOOL haveSessionId = ProcessIdToSessionId(GetCurrentProcessId(), &sessionId);
-
-    m_socketName = QString::fromUtf8("kdsingleapp-%1-%2")
-                       .arg(haveSessionId ? sessionId : 0)
-                       .arg(name);
+    if (options.testFlag(KDSingleApplication::Option::IncludeUsernameInSocketName)) {
+        DWORD usernameLen = UNLEN + 1;
+        wchar_t username[usernameLen];
+        if (GetUserNameW(username, &usernameLen)) {
+            m_socketName += QStringLiteral("-");
+            m_socketName += QString::fromWCharArray(username);
+        }
+    }
+    if (options.testFlag(KDSingleApplication::Option::IncludeSessionInSocketName)) {
+        DWORD sessionId;
+        BOOL haveSessionId = ProcessIdToSessionId(GetCurrentProcessId(), &sessionId);
+        if (haveSessionId) {
+            m_socketName += QStringLiteral("-");
+            m_socketName += QString::number(sessionId);
+        }
+    }
 #else
 #error "KDSingleApplication has not been ported to this platform"
 #endif
+
+    m_socketName += QStringLiteral("-");
+    m_socketName += name;
 
     const QString lockFilePath =
         QDir::tempPath() + QLatin1Char('/') + m_socketName + QLatin1String(".lock");
