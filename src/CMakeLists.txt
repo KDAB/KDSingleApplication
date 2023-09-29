@@ -33,10 +33,12 @@ target_include_directories(
 )
 
 if(WIN32)
-    target_link_libraries(kdsingleapplication kernel32)
+    target_link_libraries(kdsingleapplication PRIVATE kernel32)
 endif()
 target_link_libraries(
-    kdsingleapplication Qt::Core Qt::Network
+    kdsingleapplication
+    PUBLIC Qt::Core
+    PRIVATE Qt::Network
 )
 
 install(
