@@ -76,7 +76,7 @@ KDSingleApplicationLocalSocket::KDSingleApplicationLocalSocket(const QString &na
     // https://docs.microsoft.com/en-us/windows/desktop/devnotes/getting-the-session-id-of-the-current-process
     if (options.testFlag(KDSingleApplication::Option::IncludeUsernameInSocketName)) {
         DWORD usernameLen = UNLEN + 1;
-        wchar_t username[usernameLen];
+        wchar_t username[UNLEN + 1];
         if (GetUserNameW(username, &usernameLen)) {
             m_socketName += QStringLiteral("-");
             m_socketName += QString::fromWCharArray(username);
