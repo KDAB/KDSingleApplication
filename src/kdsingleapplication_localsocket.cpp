@@ -48,7 +48,7 @@ KDSingleApplicationLocalSocket::KDSingleApplicationLocalSocket(const QString &na
     : QObject(parent)
 {
 
-    QString m_socketName = QStringLiteral("kdsingleapp");
+    m_socketName = QStringLiteral("kdsingleapp");
 
 #if defined(Q_OS_UNIX)
     /* cppcheck-suppress useInitializationList */
