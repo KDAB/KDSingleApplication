@@ -77,7 +77,7 @@ KDSingleApplication::KDSingleApplication(const QString &name, QObject *parent)
 {
 }
 
-KDSingleApplication::KDSingleApplication(const QString &name, const Options options, QObject *parent)
+KDSingleApplication::KDSingleApplication(const QString &name, Options options, QObject *parent)
     : QObject(parent)
     , d_ptr(new KDSingleApplicationPrivate(name, options, this))
 {
