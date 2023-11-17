@@ -23,7 +23,10 @@ add_library(
     KDAB::kdsingleapplication ALIAS kdsingleapplication
 )
 set_target_properties(
-    kdsingleapplication PROPERTIES OUTPUT_NAME "kdsingleapplication${KDSingleApplication_LIBRARY_QTID}"
+    kdsingleapplication
+    PROPERTIES VERSION ${${PROJECT_NAME}_VERSION}
+               SOVERSION ${${PROJECT_NAME}_SOVERSION}
+               OUTPUT_NAME "kdsingleapplication${${PROJECT_NAME}_LIBRARY_QTID}"
 )
 
 target_include_directories(
