@@ -9,7 +9,7 @@ Source: https://www.github.com/KDAB/KDSingleApplication
 #License: MIT
 
 #misc documentation
-Files: README.md INSTALL.txt docs/api/*.html
+Files: README.md INSTALL.txt Changelog docs/api/*.html
 Copyright: 2019-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
 License: MIT
 

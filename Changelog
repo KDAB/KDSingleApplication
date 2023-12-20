@@ -1,0 +1,6 @@
+* v1.1 (unreleased)
+ - Add option making session ID part of the socket name optional
+ - Fix dynamic library versioning
+
+* v1.0 (21 July 2023)
+  - Initial Release
