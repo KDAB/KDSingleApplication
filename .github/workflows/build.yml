@@ -8,9 +8,11 @@ on:
   push:
     branches:
       - master
+      - 1.1
   pull_request:
     branches:
       - master
+      - 1.1
 
 jobs:
   build:
@@ -19,12 +21,9 @@ jobs:
       fail-fast: true
       matrix:
         os:
-          - ubuntu-22.04
-          #- ubuntu-20.04
-          - windows-2022
-          #- windows-2019
-          - macos-12
-          #- macos-11
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
         build_type:
           - Debug
           #- Release
@@ -46,13 +45,11 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v4
 
-      - name: Create build directory
-        run: mkdir build
-
       - name: Install ninja-build tool (must be after Qt due PATH changes)
         uses: turtlesec-no/get-ninja@main
 
       - name: Make sure MSVC is found when Ninja generator is in use
+        if: ${{ runner.os == 'Windows' }}
         uses: ilammy/msvc-dev-cmd@v1
 
       - name: Configure project
