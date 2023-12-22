@@ -47,11 +47,10 @@ Q_LOGGING_CATEGORY(kdsaLocalSocket, "kdsingleapplication.localsocket", QtWarning
 KDSingleApplicationLocalSocket::KDSingleApplicationLocalSocket(const QString &name, KDSingleApplication::Options options, QObject *parent)
     : QObject(parent)
 {
-
+    /* cppcheck-suppress useInitializationList */
     m_socketName = QStringLiteral("kdsingleapp");
 
 #if defined(Q_OS_UNIX)
-    /* cppcheck-suppress useInitializationList */
     if (options.testFlag(KDSingleApplication::Option::IncludeUsernameInSocketName)) {
         m_socketName += QStringLiteral("-");
         uid_t uid = ::getuid();
