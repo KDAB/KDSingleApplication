@@ -214,6 +214,6 @@ endif()
 if(${PROJECT_NAME}_IS_ROOT_PROJECT)
     # Add uninstall target (not for submodules since parent projects typically have uninstall too)
     include(ECMUninstallTarget)
-endif()
 
-feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
+    feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
+endif()

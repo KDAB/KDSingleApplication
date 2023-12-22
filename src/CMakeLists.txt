@@ -57,6 +57,15 @@ install(
     ARCHIVE DESTINATION ${INSTALL_ARCHIVE_DIR}
 )
 
+include(ECMGenerateHeaders)
+ecm_generate_headers(
+    kdsingleapplication_HEADERS
+    HEADER_NAMES
+    KDSingleApplication
+    OUTPUT_DIR
+    ${CMAKE_CURRENT_BINARY_DIR}/KDSingleApplication
+)
+
 if(${PROJECT_NAME}_IS_ROOT_PROJECT)
     install(
         EXPORT kdsingleapplicationTargets
@@ -71,15 +80,6 @@ if(${PROJECT_NAME}_IS_ROOT_PROJECT)
         FILES "${CMAKE_CURRENT_BINARY_DIR}/KDSingleApplication${KDSingleApplication_LIBRARY_QTID}Config.cmake"
               "${CMAKE_CURRENT_BINARY_DIR}/KDSingleApplication${KDSingleApplication_LIBRARY_QTID}ConfigVersion.cmake"
         DESTINATION "${INSTALL_LIBRARY_DIR}/cmake/KDSingleApplication${KDSingleApplication_LIBRARY_QTID}"
-    )
-
-    include(ECMGenerateHeaders)
-    ecm_generate_headers(
-        kdsingleapplication_HEADERS
-        HEADER_NAMES
-        KDSingleApplication
-        OUTPUT_DIR
-        ${CMAKE_CURRENT_BINARY_DIR}/KDSingleApplication
     )
 
     install(FILES ${kdsingleapplication_HEADERS} DESTINATION ${KDSINGLEAPPLICATION_INCLUDEDIR})
