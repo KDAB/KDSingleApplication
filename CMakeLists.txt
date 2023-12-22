@@ -110,7 +110,6 @@ if(${PROJECT_NAME}_TESTS)
     find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Test)
 endif()
 
-set(Qt_VERSION_MAJOR ${QT_VERSION_MAJOR}) # KDQtInstallPaths wants "Qt", not "QT"
 include(KDQtInstallPaths) #to set QT_INSTALL_FOO variables
 
 add_definitions(
