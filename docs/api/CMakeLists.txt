@@ -6,6 +6,7 @@
 # SPDX-License-Identifier: MIT
 #
 # Contact KDAB at <info@kdab.com> for commercial licensing options.
+#
 
 # dot should come with Doxygen find_package(Doxygen)
 if(DOXYGEN_DOT_EXECUTABLE)
