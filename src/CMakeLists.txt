@@ -87,7 +87,7 @@ if(${PROJECT_NAME}_IS_ROOT_PROJECT)
     if(MSVC AND NOT ${PROJECT_NAME}_STATIC)
         install(
             FILES "$<TARGET_PDB_FILE_DIR:kdsingleapplication>/$<TARGET_PDB_FILE_NAME:kdsingleapplication>"
-            DESTINATION ${INSTALL_LIBRARY_DIR}
+            DESTINATION ${INSTALL_RUNTIME_DIR}
             CONFIGURATIONS Debug RelWithDebInfo
         )
     endif()

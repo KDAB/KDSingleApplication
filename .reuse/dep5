@@ -14,7 +14,7 @@ Copyright: Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
 License: MIT
 
 #misc config files
-Files: .clang-format .cmake-format.py .codespellrc .gitignore .gitreview .krazy .mdlrc .mdlrc.rb .pre-commit-config.yaml appveyor.yml docs/api/Doxyfile.cmake distro/*
+Files: .clang-format .cmake-format.py .codespellrc .gitignore .gitreview .krazy .mdlrc .mdlrc.rb .pre-commit-config.yaml docs/api/Doxyfile.cmake distro/*
 Copyright: Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
 License: MIT
 
@@ -27,3 +27,8 @@ License: MIT
 Files: cmake/ECM/modules/*
 Copyright: The KDE Project
 License: BSD-3-Clause
+
+# doxygen awesome
+Files: docs/api/doxygen-awesome.css
+Copyright: 2021 - 2023 jothepro
+License: MIT

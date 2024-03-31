@@ -1308,7 +1308,7 @@ HTML_FOOTER            = @CMAKE_CURRENT_SOURCE_DIR@/footer.html
 # obsolete.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_STYLESHEET        =
+HTML_STYLESHEET        = @CMAKE_CURRENT_SOURCE_DIR@/doxygen-awesome.css
 
 # The HTML_EXTRA_STYLESHEET tag can be used to specify additional user-defined
 # cascading style sheets that are included after the standard style sheets
@@ -1349,7 +1349,7 @@ HTML_EXTRA_FILES       = "@CMAKE_CURRENT_SOURCE_DIR@/kdab-logo-16x16.png"
 # The default value is: AUTO_LIGHT.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_COLORSTYLE        = AUTO_LIGHT
+HTML_COLORSTYLE        = LIGHT
 
 # The HTML_COLORSTYLE_HUE tag controls the color of the HTML output. Doxygen
 # will adjust the colors in the style sheet and background images according to
