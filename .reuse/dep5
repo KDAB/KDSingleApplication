@@ -14,7 +14,7 @@ Copyright: Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
 License: MIT
 
 #misc config files
-Files: .clang-format .cmake-format.py .codespellrc .gitignore .gitreview .krazy .mdlrc .mdlrc.rb .pre-commit-config.yaml appveyor.yml docs/api/Doxyfile.cmake distro/*
+Files: .clang-format .cmake-format.py .codespellrc .gitignore .gitreview .krazy .mdlrc .mdlrc.rb .pre-commit-config.yaml docs/api/Doxyfile.cmake distro/*
 Copyright: Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
 License: MIT
 
