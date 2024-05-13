@@ -37,13 +37,13 @@ int main(int argc, char **argv)
     if (kdsa.isPrimaryInstance()) {
         std::cout << "Primary" << std::endl;
 
-        QObject::connect(&kdsa, &KDSingleApplication::messageReceived,
+        QObject::connect(&kdsa, &KDSingleApplication::messageReceived, qApp,
                          [](const QByteArray &message) {
                              std::cout << "MESSAGE: >" << message.constData() << '<' << std::endl;
                              qApp->quit();
                          });
 
-        QTimer::singleShot(5000, []() { qApp->exit(1); });
+        QTimer::singleShot(5000, qApp, []() { qApp->exit(1); });
 
         return app.exec();
     } else {

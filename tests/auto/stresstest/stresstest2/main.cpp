@@ -52,7 +52,7 @@ int main(int argc, char **argv)
                                  qApp->quit();
                          });
 
-        QTimer::singleShot(timeout, [&counter]() {
+        QTimer::singleShot(timeout, qApp, [&counter]() {
             std::cerr << "Primary time out, still " << counter << " secondaries" << std::endl;
             qApp->exit(1);
         });

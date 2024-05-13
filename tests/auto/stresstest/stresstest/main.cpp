@@ -56,7 +56,7 @@ int main(int argc, char **argv)
                                  qApp->quit();
                          });
 
-        QTimer::singleShot(timeout, [&totalMessages]() {
+        QTimer::singleShot(timeout, qApp, [&totalMessages]() {
             std::cerr << "Primary timed out, still " << totalMessages << " messages" << std::endl;
             qApp->exit(1);
         });
