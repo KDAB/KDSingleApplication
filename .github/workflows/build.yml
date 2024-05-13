@@ -24,22 +24,22 @@ jobs:
           - ubuntu-latest
           - windows-latest
           - macos-latest
+
         build_type:
           - Debug
-          #- Release
-        qt:
-          - version: "5.15.2"
-            requested: "5.15"
-          - version: "6.5.3"
-            requested: "6.5.*"
+
+        config:
+          - qt_version: "5.15.2"
+            cmake_osx_architectures: "x86_64"
+
+          - qt_version: "6.5.3"
 
     steps:
       - name: Install Qt with options and default aqtversion
         uses: jurplel/install-qt-action@v3
         with:
           aqtversion: null # use whatever the default is
-          modules: ${{ matrix.qt.modules }}
-          version: ${{ matrix.qt.requested }}
+          version: ${{ matrix.config.qt_version }}
           cache: true
 
       - name: Checkout sources
@@ -56,7 +56,8 @@ jobs:
         run: >
           cmake -S . -B ./build -G Ninja
           -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
-          -DKDSingleApplication_QT6=${{ startsWith(matrix.qt.version, '6.') }}
+          -DCMAKE_OSX_ARCHITECTURES=${{ matrix.config.cmake_osx_architectures}}
+          -DKDSingleApplication_QT6=${{ startsWith(matrix.config.qt_version, '6.') }}
           -DKDSingleApplication_DEVELOPER_MODE=${{ matrix.build_type == 'Debug' }}
           -DKDSingleApplication_TESTS=${{ matrix.build_type == 'Debug' }}
           -DKDSingleApplication_EXAMPLES=${{ matrix.build_type == 'Debug' }}
