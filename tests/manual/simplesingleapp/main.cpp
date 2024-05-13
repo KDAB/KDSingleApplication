@@ -31,7 +31,7 @@ int main(int argc, char **argv)
         std::cout << "Primary; waiting for secondary instances..." << std::endl;
         shutdownTimer.start();
 
-        QObject::connect(&kdsa, &KDSingleApplication::messageReceived,
+        QObject::connect(&kdsa, &KDSingleApplication::messageReceived, &shutdownTimer,
                          [&shutdownTimer](const QByteArray &message) {
                              shutdownTimer.start();
                              std::cout << "Message from secondary: >" << message.constData() << '<' << std::endl;
