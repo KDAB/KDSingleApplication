@@ -1,6 +1,6 @@
 # This file is part of KDSingleApplication.
 #
-# SPDX-FileCopyrightText: 2020-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+# SPDX-FileCopyrightText: 2020 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
 #
 # SPDX-License-Identifier: MIT
 #
@@ -50,13 +50,13 @@ project(
 )
 
 set(${PROJECT_NAME}_VERSION_MAJOR 1)
-set(${PROJECT_NAME}_VERSION_MINOR 0)
+set(${PROJECT_NAME}_VERSION_MINOR 1)
 set(${PROJECT_NAME}_VERSION_PATCH 95)
 set(${PROJECT_NAME}_VERSION
     ${${PROJECT_NAME}_VERSION_MAJOR}.${${PROJECT_NAME}_VERSION_MINOR}.${${PROJECT_NAME}_VERSION_PATCH}
 )
 set(PROJECT_VERSION ${${PROJECT_NAME}_VERSION}) #PROJECT_VERSION is needed by some ECM modules
-set(${PROJECT_NAME}_SOVERSION "1.1")
+set(${PROJECT_NAME}_SOVERSION "1.2")
 
 cmake_policy(SET CMP0020 NEW)
 cmake_policy(SET CMP0042 NEW)
@@ -110,7 +110,6 @@ if(${PROJECT_NAME}_TESTS)
     find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Test)
 endif()
 
-set(Qt_VERSION_MAJOR ${QT_VERSION_MAJOR}) # KDQtInstallPaths wants "Qt", not "QT"
 include(KDQtInstallPaths) #to set QT_INSTALL_FOO variables
 
 add_definitions(
@@ -214,6 +213,6 @@ endif()
 if(${PROJECT_NAME}_IS_ROOT_PROJECT)
     # Add uninstall target (not for submodules since parent projects typically have uninstall too)
     include(ECMUninstallTarget)
-endif()
 
-feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
+    feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
+endif()

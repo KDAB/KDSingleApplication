@@ -21,7 +21,7 @@ See [INSTALL.txt](INSTALL.txt) for installation instructions using CMake.
 
 ## Licensing
 
-KDSingleApplication is (C) 2019-2023, Klarälvdalens Datakonsult AB, and is available
+KDSingleApplication is © Klarälvdalens Datakonsult AB and is available
 under the terms of the [MIT license](LICENSES/MIT.txt).
 
 Contact KDAB at <info@kdab.com> if you need different licensing options.

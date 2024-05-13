@@ -1,6 +1,6 @@
 # This file is part of KDSingleApplication.
 #
-# SPDX-FileCopyrightText: 2020-2023 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+# SPDX-FileCopyrightText: 2020 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
 #
 # SPDX-License-Identifier: MIT
 #
@@ -57,6 +57,15 @@ install(
     ARCHIVE DESTINATION ${INSTALL_ARCHIVE_DIR}
 )
 
+include(ECMGenerateHeaders)
+ecm_generate_headers(
+    kdsingleapplication_HEADERS
+    HEADER_NAMES
+    KDSingleApplication
+    OUTPUT_DIR
+    ${CMAKE_CURRENT_BINARY_DIR}/KDSingleApplication
+)
+
 if(${PROJECT_NAME}_IS_ROOT_PROJECT)
     install(
         EXPORT kdsingleapplicationTargets
@@ -73,21 +82,12 @@ if(${PROJECT_NAME}_IS_ROOT_PROJECT)
         DESTINATION "${INSTALL_LIBRARY_DIR}/cmake/KDSingleApplication${KDSingleApplication_LIBRARY_QTID}"
     )
 
-    include(ECMGenerateHeaders)
-    ecm_generate_headers(
-        kdsingleapplication_HEADERS
-        HEADER_NAMES
-        KDSingleApplication
-        OUTPUT_DIR
-        ${CMAKE_CURRENT_BINARY_DIR}/KDSingleApplication
-    )
-
     install(FILES ${kdsingleapplication_HEADERS} DESTINATION ${KDSINGLEAPPLICATION_INCLUDEDIR})
 
     if(MSVC AND NOT ${PROJECT_NAME}_STATIC)
         install(
             FILES "$<TARGET_PDB_FILE_DIR:kdsingleapplication>/$<TARGET_PDB_FILE_NAME:kdsingleapplication>"
-            DESTINATION ${INSTALL_LIBRARY_DIR}
+            DESTINATION ${INSTALL_RUNTIME_DIR}
             CONFIGURATIONS Debug RelWithDebInfo
         )
     endif()

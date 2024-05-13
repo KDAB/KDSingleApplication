@@ -6,6 +6,7 @@
 # SPDX-License-Identifier: MIT
 #
 # Contact KDAB at <info@kdab.com> for commercial licensing options.
+#
 
 # dot should come with Doxygen find_package(Doxygen)
 if(DOXYGEN_DOT_EXECUTABLE)
@@ -51,7 +52,7 @@ add_custom_command(
             ${DOXYGEN_OUTPUT_DIR}/html/LICENSES
     COMMAND ${CMAKE_COMMAND} -E make_directory ${DOXYGEN_OUTPUT_DIR}/html/docs
     COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/examples ${DOXYGEN_OUTPUT_DIR}/html/examples
-    DEPENDS ${_dox_deps} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
+    DEPENDS ${_dox_deps} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile ${CMAKE_SOURCE_DIR}/README.md
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
     COMMENT "Generate the .qch file"
 )

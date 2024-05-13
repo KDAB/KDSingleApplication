@@ -1,5 +1,5 @@
 Name:           qt6-kdsingleapplication
-Version:        1.0.0
+Version:        1.1.0
 Release:        1
 Summary:        KDAB's helper class for Qt6 single-instance policy applications
 Source0:        %{name}-%{version}.tar.gz
@@ -89,5 +89,7 @@ cmake . -DCMAKE_INSTALL_PREFIX=/usr -DKDSingleApplication_QT6=True -DKDSingleApp
 %{_libdir}/libkdsingleapplication-qt6.a
 
 %changelog
+* Fri Dec 22 2023 Allen Winter <allen.winter@kdab.com> 1.1.0
+  1.1.0 final
 * Mon Jul 17 2023 Allen Winter <allen.winter@kdab.com> 1.0.0
   1.0.0 final
