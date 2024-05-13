@@ -1,5 +1,5 @@
 *.pro.user
 Makefile
 .cmake/
-CMakeLists.txt.user
+CMakeLists.txt.*
 /build*/
