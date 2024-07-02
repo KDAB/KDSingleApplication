@@ -6,7 +6,7 @@ ci:
 exclude: ^(cmake/ECM|cmake/KDAB/|docs/api/doxygen-awesome.css)
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v4.5.0
+  rev: v4.6.0
   hooks:
   - id: trailing-whitespace
   - id: end-of-file-fixer
@@ -19,12 +19,12 @@ repos:
   - id: destroyed-symlinks
   - id: check-executables-have-shebangs
 - repo: https://github.com/pre-commit/mirrors-clang-format
-  rev: v18.1.2
+  rev: v18.1.8
   hooks:
   - id: clang-format
     exclude: (.json)
 - repo: https://github.com/codespell-project/codespell
-  rev: v2.2.6
+  rev: v2.3.0
   hooks:
   - id: codespell
 - repo: https://github.com/cheshirekow/cmake-format-precommit
@@ -42,6 +42,6 @@ repos:
     language: ruby
     files: \.(md|mdown|markdown)$
 - repo: https://github.com/fsfe/reuse-tool
-  rev: v3.0.1
+  rev: v3.1.0a1
   hooks:
   - id: reuse
