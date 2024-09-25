@@ -40,8 +40,8 @@ if(WIN32)
 endif()
 target_link_libraries(
     kdsingleapplication
-    PUBLIC Qt::Core
-    PRIVATE Qt::Network
+    PUBLIC Qt${QT_VERSION_MAJOR}::Core
+    PRIVATE Qt${QT_VERSION_MAJOR}::Network
 )
 
 install(
