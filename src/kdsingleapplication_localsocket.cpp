@@ -30,6 +30,9 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <pwd.h>
+#if defined(Q_OS_LINUX)
+#include <linux/un.h>
+#endif
 #endif
 
 #if defined(Q_OS_WIN)
@@ -50,24 +53,36 @@ KDSingleApplicationLocalSocket::KDSingleApplicationLocalSocket(const QString &na
     /* cppcheck-suppress useInitializationList */
     m_socketName = QStringLiteral("kdsingleapp");
 
+    QString userName;
+    QString sessionId;
+
 #if defined(Q_OS_UNIX)
+
+    // Make sure the socket name does not exceed the size of sockaddr_un.sun_path
+#ifdef Q_OS_LINUX
+    constexpr int maxSocketNameLength = UNIX_PATH_MAX - 1;
+#else
+    constexpr int maxSocketNameLength = 103; // BSD and macOS
+#endif
+
+    const int tempPathLength = QDir::cleanPath(QDir::tempPath()).length() + 1;
+
+    QString alternativeUserName;
     if (options.testFlag(KDSingleApplication::Option::IncludeUsernameInSocketName)) {
-        m_socketName += QStringLiteral("-");
         uid_t uid = ::getuid();
+        alternativeUserName = QString::number(uid);
         struct passwd *pw = ::getpwuid(uid);
-        if (pw) {
-            QString username = QString::fromUtf8(pw->pw_name);
-            m_socketName += username;
-        } else {
-            m_socketName += QString::number(uid);
-        }
+        userName = pw ? QString::fromUtf8(pw->pw_name) : alternativeUserName;
     }
     if (options.testFlag(KDSingleApplication::Option::IncludeSessionInSocketName)) {
-        QString sessionId = qEnvironmentVariable("XDG_SESSION_ID");
-        if (!sessionId.isEmpty()) {
-            m_socketName += QStringLiteral("-");
-            m_socketName += sessionId;
-        }
+        sessionId = qEnvironmentVariable("XDG_SESSION_ID");
+    }
+    int socketNameLength = tempPathLength + m_socketName.length() + 1 + name.length() + 1 + userName.length();
+    if (options.testFlag(KDSingleApplication::Option::IncludeSessionInSocketName) && !sessionId.isEmpty()) {
+        socketNameLength += sessionId.length() + 1;
+    }
+    if (socketNameLength > maxSocketNameLength) {
+        userName = alternativeUserName;
     }
 #elif defined(Q_OS_WIN)
     // I'm not sure of a "global session identifier" on Windows; are
@@ -77,24 +92,43 @@ KDSingleApplicationLocalSocket::KDSingleApplicationLocalSocket(const QString &na
         DWORD usernameLen = UNLEN + 1;
         wchar_t username[UNLEN + 1];
         if (GetUserNameW(username, &usernameLen)) {
-            m_socketName += QStringLiteral("-");
-            m_socketName += QString::fromWCharArray(username);
+            userName = QString::fromWCharArray(username);
         }
     }
     if (options.testFlag(KDSingleApplication::Option::IncludeSessionInSocketName)) {
-        DWORD sessionId;
-        BOOL haveSessionId = ProcessIdToSessionId(GetCurrentProcessId(), &sessionId);
+        DWORD pSessionId;
+        BOOL haveSessionId = ProcessIdToSessionId(GetCurrentProcessId(), &pSessionId);
         if (haveSessionId) {
-            m_socketName += QStringLiteral("-");
-            m_socketName += QString::number(sessionId);
+            sessionId = QString::number(pSessionId);
         }
     }
 #else
 #error "KDSingleApplication has not been ported to this platform"
 #endif
 
+    if (options.testFlag(KDSingleApplication::Option::IncludeUsernameInSocketName) && !userName.isEmpty()) {
+        m_socketName += QStringLiteral("-");
+        m_socketName += userName;
+    }
+
+    if (options.testFlag(KDSingleApplication::Option::IncludeSessionInSocketName) && !sessionId.isEmpty()) {
+        m_socketName += QStringLiteral("-");
+        m_socketName += sessionId;
+    }
+
     m_socketName += QStringLiteral("-");
     m_socketName += name;
+
+#if defined(Q_OS_UNIX)
+    int fullSocketNameLength = tempPathLength + m_socketName.length();
+#if defined(Q_OS_LINUX) || defined(Q_OS_QNX)
+    fullSocketNameLength += 1;  // PlatformSupportsAbstractNamespace, see qlocalserver_unix.cpp
+#endif
+    if (fullSocketNameLength > maxSocketNameLength) {
+        qCDebug(kdsaLocalSocket) << "Chopping socket name because it is longer than" << maxSocketNameLength;
+        m_socketName.chop(fullSocketNameLength - maxSocketNameLength);
+    }
+#endif
 
     const QString lockFilePath =
         QDir::tempPath() + QLatin1Char('/') + m_socketName + QLatin1String(".lock");
