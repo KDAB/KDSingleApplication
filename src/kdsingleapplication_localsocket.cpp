@@ -122,7 +122,7 @@ KDSingleApplicationLocalSocket::KDSingleApplicationLocalSocket(const QString &na
 #if defined(Q_OS_UNIX)
     int fullSocketNameLength = tempPathLength + m_socketName.length();
 #if defined(Q_OS_LINUX) || defined(Q_OS_QNX)
-    fullSocketNameLength += 1;  // PlatformSupportsAbstractNamespace, see qlocalserver_unix.cpp
+    fullSocketNameLength += 1; // PlatformSupportsAbstractNamespace, see qlocalserver_unix.cpp
 #endif
     if (fullSocketNameLength > maxSocketNameLength) {
         qCDebug(kdsaLocalSocket) << "Chopping socket name because it is longer than" << maxSocketNameLength;
