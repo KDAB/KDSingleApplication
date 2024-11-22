@@ -1,0 +1,81 @@
+# SPDX-FileCopyrightText: 2024 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.com>
+#
+# SPDX-License-Identifier: MIT
+
+name: CI Nightly
+
+on:
+  schedule:
+  - cron: '0 3 * * *'
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+
+        config:
+          - name: ci-clang-tidy-qt5
+            cmake_arg: '-DCMAKE_CXX_CLANG_TIDY=clang-tidy'
+            qt_version: "5.15"
+
+          - name: ci-clang-tidy-qt6
+            cmake_arg: '-DCMAKE_CXX_CLANG_TIDY=clang-tidy'
+            qt_version: "6.5.3"
+
+          - name: ci-clazy-qt5
+            cmake_arg: '-DCMAKE_CXX_COMPILER=clazy'
+            qt_version: "5.15"
+            apt_pgks:
+              - clazy
+
+          - name: ci-clazy-qt6
+            cmake_arg: '-DCMAKE_CXX_COMPILER=clazy'
+            qt_version: "6.5.3"
+            apt_pgks:
+              - clazy
+
+    steps:
+      - name: Install Qt ${{ matrix.config.qt_version }} with options and default aqtversion
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: ${{ matrix.config.qt_version }}
+          cache: true
+
+      - name: Install ninja-build tool (must be after Qt due PATH changes)
+        uses: turtlesec-no/get-ninja@main
+
+      - name: Install dependencies on Ubuntu (${{ join(matrix.config.apt_pgks, ' ') }})
+        if: ${{ runner.os == 'Linux' && matrix.config.apt_pgks }}
+        run: |
+          sudo apt update -qq
+          echo ${{ join(matrix.config.apt_pgks, ' ') }} | xargs sudo apt install -y
+
+      - uses: actions/checkout@v4
+        #with:
+          #ref: '2.0' # schedule.cron do not allow branch setting
+
+      - name: Configure project
+        run: >
+          cmake -S . -B ./build -G Ninja ${{ matrix.config.cmake_arg }}
+          -DCMAKE_BUILD_TYPE=Debug
+          --warn-uninitialized
+          -Werror=dev
+          -DKDSingleApplication_QT6=${{ startsWith(matrix.config.qt_version, '6.') }}
+          -DKDSingleApplication_DEVELOPER_MODE=ON
+          -DKDSingleApplication_TESTS=ON
+          -DKDSingleApplication_EXAMPLES=ON
+          -DKDSingleApplication_DOCS=OFF
+
+      - name: Build Project
+        id: ctest
+        run: cmake --build ./build
+
+      - name: Read tests log when it fails
+        uses: andstor/file-reader-action@v1
+        if: ${{ steps.ctest.conclusion == 'failure' }}
+        with:
+          path: "./build/Testing/Temporary/LastTest.log"
