@@ -6,6 +6,11 @@
 #
 # Contact KDAB at <info@kdab.com> for commercial licensing options.
 #
-add_subdirectory(simpletest)
-add_subdirectory(stresstest)
-add_subdirectory(namelengthtest)
+set(namelengthtest_SRCS main.cpp)
+add_executable(
+    namelengthtest
+    ${namelengthtest_SRCS}
+)
+target_link_libraries(
+    namelengthtest Qt::Widgets kdsingleapplication
+)

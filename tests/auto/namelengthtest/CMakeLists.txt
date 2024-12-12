@@ -6,6 +6,5 @@
 #
 # Contact KDAB at <info@kdab.com> for commercial licensing options.
 #
-add_subdirectory(simpletest)
-add_subdirectory(stresstest)
 add_subdirectory(namelengthtest)
+add_subdirectory(test)
