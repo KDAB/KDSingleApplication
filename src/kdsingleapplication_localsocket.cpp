@@ -85,6 +85,10 @@ KDSingleApplicationLocalSocket::KDSingleApplicationLocalSocket(const QString &na
         userName = alternativeUserName;
     }
 #elif defined(Q_OS_WIN)
+
+    constexpr int maxSocketNameLength = MAX_PATH - 1;
+    const int tempPathLength = 16; // "\\.\pipe\LOCAL\"
+
     // I'm not sure of a "global session identifier" on Windows; are
     // multiple logins from the same user a possibility? For now, following this:
     // https://docs.microsoft.com/en-us/windows/desktop/devnotes/getting-the-session-id-of-the-current-process
@@ -119,7 +123,6 @@ KDSingleApplicationLocalSocket::KDSingleApplicationLocalSocket(const QString &na
     m_socketName += QStringLiteral("-");
     m_socketName += name;
 
-#if defined(Q_OS_UNIX)
     int fullSocketNameLength = tempPathLength + m_socketName.length();
 #if defined(Q_OS_LINUX) || defined(Q_OS_QNX)
     fullSocketNameLength += 1; // PlatformSupportsAbstractNamespace, see qlocalserver_unix.cpp
@@ -128,7 +131,6 @@ KDSingleApplicationLocalSocket::KDSingleApplicationLocalSocket(const QString &na
         qCDebug(kdsaLocalSocket) << "Chopping socket name because it is longer than" << maxSocketNameLength;
         m_socketName.chop(fullSocketNameLength - maxSocketNameLength);
     }
-#endif
 
     const QString lockFilePath =
         QDir::tempPath() + QLatin1Char('/') + m_socketName + QLatin1String(".lock");
