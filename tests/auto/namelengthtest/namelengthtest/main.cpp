@@ -30,8 +30,6 @@ int main(int argc, char **argv)
 
     QCoreApplication app(argc, argv);
 
-    const QString appName = QLatin1String("namelengthtest-") + app.arguments().value(1);
-
     KDSingleApplication kdsa(QStringLiteral("a").repeated(9000));
 
     if (kdsa.isPrimaryInstance()) {
