@@ -74,16 +74,13 @@ KDSingleApplicationLocalSocket::KDSingleApplicationLocalSocket(const QString &na
         struct passwd *pw = ::getpwuid(uid);
         userName = pw ? QString::fromUtf8(pw->pw_name) : alternativeUserName;
     }
-    if (options.testFlag(KDSingleApplication::Option::IncludeSessionInSocketName)) {
+    if (options.testFlag(KDSingleApplication::Option::IncludeSessionInSocketName))
         sessionId = qEnvironmentVariable("XDG_SESSION_ID");
-    }
     int socketNameLength = tempPathLength + m_socketName.length() + 1 + name.length() + 1 + userName.length();
-    if (options.testFlag(KDSingleApplication::Option::IncludeSessionInSocketName) && !sessionId.isEmpty()) {
+    if (options.testFlag(KDSingleApplication::Option::IncludeSessionInSocketName) && !sessionId.isEmpty())
         socketNameLength += sessionId.length() + 1;
-    }
-    if (socketNameLength > maxSocketNameLength) {
+    if (socketNameLength > maxSocketNameLength)
         userName = alternativeUserName;
-    }
 #elif defined(Q_OS_WIN)
 
     constexpr int maxSocketNameLength = MAX_PATH - 1;
@@ -95,16 +92,14 @@ KDSingleApplicationLocalSocket::KDSingleApplicationLocalSocket(const QString &na
     if (options.testFlag(KDSingleApplication::Option::IncludeUsernameInSocketName)) {
         DWORD usernameLen = UNLEN + 1;
         wchar_t username[UNLEN + 1];
-        if (GetUserNameW(username, &usernameLen)) {
+        if (GetUserNameW(username, &usernameLen))
             userName = QString::fromWCharArray(username);
-        }
     }
     if (options.testFlag(KDSingleApplication::Option::IncludeSessionInSocketName)) {
         DWORD pSessionId;
         BOOL haveSessionId = ProcessIdToSessionId(GetCurrentProcessId(), &pSessionId);
-        if (haveSessionId) {
+        if (haveSessionId)
             sessionId = QString::number(pSessionId);
-        }
     }
 #else
 #error "KDSingleApplication has not been ported to this platform"
