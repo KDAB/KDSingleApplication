@@ -30,9 +30,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <pwd.h>
-#if defined(Q_OS_LINUX)
-#include <linux/un.h>
-#endif
+#include <sys/un.h>
 #endif
 
 #if defined(Q_OS_WIN)
@@ -59,11 +57,7 @@ KDSingleApplicationLocalSocket::KDSingleApplicationLocalSocket(const QString &na
 #if defined(Q_OS_UNIX)
 
     // Make sure the socket name does not exceed the size of sockaddr_un.sun_path
-#ifdef Q_OS_LINUX
-    constexpr int maxSocketNameLength = UNIX_PATH_MAX - 1;
-#else
-    constexpr int maxSocketNameLength = 103; // BSD and macOS
-#endif
+    constexpr int maxSocketNameLength = sizeof(sockaddr_un::sun_path) - 1;
 
     const int tempPathLength = QDir::cleanPath(QDir::tempPath()).length() + 1;
 
