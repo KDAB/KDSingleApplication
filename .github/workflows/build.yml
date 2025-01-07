@@ -86,3 +86,49 @@ jobs:
         if: ${{ failure() && matrix.build_type == 'Debug' }}
         with:
           path: "./build/Testing/Temporary/LastTest.log"
+
+  build-freebsd:
+    name: Build FreeBSD
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Build FreeBSD
+      env:
+        QT_QPA_PLATFORM: offscreen
+      uses: vmactions/freebsd-vm@v1.1.7
+      with:
+        usesh: true
+        mem: 4096
+        envs: 'QT_QPA_PLATFORM'
+        prepare: pkg install -y git cmake qt6-base qt6-tools
+        run: |
+          set -e
+          git config --global --add safe.directory ${GITHUB_WORKSPACE}
+          cmake -E make_directory build
+          cmake -S . -B build -DCMAKE_BUILD_TYPE="Debug" -DKDSingleApplication_QT6=ON -DKDSingleApplication_TESTS=ON
+          cmake --build build --config Debug --parallel 4
+          ctest --test-dir build -C Debug --output-on-failure --exclude-regex "tst_stresstest"
+
+  build-openbsd:
+    name: Build OpenBSD
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Build OpenBSD
+      env:
+        QT_QPA_PLATFORM: offscreen
+      uses: vmactions/openbsd-vm@v1.1.5
+      with:
+        usesh: true
+        mem: 4096
+        envs: 'QT_QPA_PLATFORM'
+        prepare: pkg_add git cmake qt6-qtbase qt6-qttools
+        run: |
+          set -e
+          git config --global --add safe.directory ${GITHUB_WORKSPACE}
+          cmake -E make_directory build
+          cmake -S . -B build -DCMAKE_BUILD_TYPE="Debug" -DKDSingleApplication_QT6=ON -DKDSingleApplication_TESTS=ON
+          cmake --build build --config Debug --parallel 4
+          ctest --test-dir build -C Debug --output-on-failure --exclude-regex "tst_stresstest"
