@@ -1,5 +1,6 @@
 * v1.2.0 (unreleased)
- -
+ - KDSingleApplication now looks for Qt6 by default, rather than Qt5. If your Qt5
+   build broke, pass -DKDSingleApplication_QT6=OFF to CMake.
 
 * v1.1.1 (unreleased)
  -

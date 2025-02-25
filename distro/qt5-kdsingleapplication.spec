@@ -61,7 +61,7 @@ develop programs using kdsingleapplication.
 %autosetup
 
 %build
-cmake . -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DKDSingleApplication_STATIC=True
+cmake . -DCMAKE_INSTALL_PREFIX=/usr -DKDSingleApplication_QT6=False -DCMAKE_BUILD_TYPE=Release -DKDSingleApplication_STATIC=True
 %__make %{?_smp_mflags}
 
 %post -p /sbin/ldconfig

@@ -14,7 +14,7 @@
 #
 # -DKDSingleApplication_QT6=[true|false]
 #  Build against Qt6 rather than Qt5
-#  Default=false (Qt5 will be used even if Qt6 is available)
+#  Default=true
 #
 # -DKDSingleApplication_STATIC=[true|false]
 #  Build static versions of the libraries
@@ -63,7 +63,7 @@ cmake_policy(SET CMP0042 NEW)
 
 include(FeatureSummary)
 
-option(${PROJECT_NAME}_QT6 "Build against Qt 6" OFF)
+option(${PROJECT_NAME}_QT6 "Build against Qt 6" ON)
 option(${PROJECT_NAME}_DEVELOPER_MODE "Developer Mode" OFF)
 option(${PROJECT_NAME}_TESTS "Build the tests" OFF)
 option(${PROJECT_NAME}_EXAMPLES "Build the examples" ON)
