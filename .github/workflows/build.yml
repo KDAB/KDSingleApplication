@@ -119,7 +119,7 @@ jobs:
     - name: Build OpenBSD
       env:
         QT_QPA_PLATFORM: offscreen
-      uses: vmactions/openbsd-vm@v1.1.6
+      uses: vmactions/openbsd-vm@v1.1.8
       with:
         usesh: true
         mem: 4096
