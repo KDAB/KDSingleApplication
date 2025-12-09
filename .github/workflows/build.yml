@@ -97,7 +97,7 @@ jobs:
     - name: Build FreeBSD
       env:
         QT_QPA_PLATFORM: offscreen
-      uses: vmactions/freebsd-vm@v1.2.8
+      uses: vmactions/freebsd-vm@v1.3.0
       with:
         usesh: true
         mem: 4096
