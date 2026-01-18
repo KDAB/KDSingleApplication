@@ -33,7 +33,7 @@ jobs:
             cmake_osx_architectures: "x86_64"
 
           - qt_version: "6.5.3"
-          - qt_version: "6.10.0" # Bump to latest freely
+          - qt_version: "6.11.0" # Bump to latest freely
 
     steps:
       - name: Install Qt with options and default aqtversion
