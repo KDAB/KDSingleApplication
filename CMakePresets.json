@@ -1,0 +1,40 @@
+{
+  "version": 5,
+  "configurePresets": [
+    {
+      "name": "base",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build-${presetName}",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+      },
+      "warnings": {
+        "uninitialized": true
+      },
+      "errors": {
+        "dev": true
+      }
+    },
+    {
+      "name": "dev",
+      "inherits": ["base"],
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "KDSingleApplication_DOCS": "OFF",
+        "KDSingleApplication_EXAMPLES": "ON",
+        "KDSingleApplication_TESTS": "ON",
+        "KDSingleApplication_QT6": "ON"
+      }
+    },
+    {
+      "name": "dev-asan",
+      "inherits": ["dev"],
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS": "-DQT_FORCE_ASSERTS -fsanitize=address -fsanitize=undefined -fno-optimize-sibling-calls",
+        "CMAKE_SHARED_LINKER_FLAGS": "-fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer",
+        "CMAKE_EXE_LINKER_FLAGS": "-fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer"
+      }
+    }
+  ]
+}
