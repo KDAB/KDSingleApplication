@@ -4,3 +4,4 @@ Makefile
 CMakeLists.txt.*
 /build*/
 compile_commands.json
+.cache
