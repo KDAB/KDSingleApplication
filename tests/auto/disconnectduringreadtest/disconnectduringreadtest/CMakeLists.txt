@@ -6,7 +6,11 @@
 #
 # Contact KDAB at <info@kdab.com> for commercial licensing options.
 #
-add_subdirectory(simpletest)
-add_subdirectory(stresstest)
-add_subdirectory(namelengthtest)
-add_subdirectory(disconnectduringreadtest)
+set(disconnectduringreadtest_SRCS main.cpp)
+add_executable(
+    disconnectduringreadtest
+    ${disconnectduringreadtest_SRCS}
+)
+target_link_libraries(
+    disconnectduringreadtest Qt::Widgets kdsingleapplication
+)
