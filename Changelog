@@ -1,3 +1,6 @@
+* v1.2.1
+ - Fix crash when message handler spins the event loop resulting in double-free (#114)
+
 * v1.2.0
  - KDSingleApplication now looks for Qt6 by default, rather than Qt5. If your Qt5
    build broke, pass -DKDSingleApplication_QT6=OFF to CMake.
