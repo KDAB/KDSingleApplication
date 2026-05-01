@@ -97,7 +97,7 @@ jobs:
     - name: Build FreeBSD
       env:
         QT_QPA_PLATFORM: offscreen
-      uses: vmactions/freebsd-vm@v1.4.4
+      uses: vmactions/freebsd-vm@v1.4.5
       with:
         usesh: true
         mem: 4096
@@ -120,7 +120,7 @@ jobs:
     - name: Build OpenBSD
       env:
         QT_QPA_PLATFORM: offscreen
-      uses: vmactions/openbsd-vm@v1.3.8
+      uses: vmactions/openbsd-vm@v1.4.0
       with:
         usesh: true
         mem: 4096
