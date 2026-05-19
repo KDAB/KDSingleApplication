@@ -95,3 +95,22 @@ That's all you need to do (the imported target also brings in the include direct
 
 You may also need to point the CMAKE_PREFIX_PATH environment variable depending
 on where you installed KDSingleApplication.
+
+You can also use KDSingleApplication with CMake FetchContent.
+In your CMake file:
+
+     qt_add_executable(MyApp)
+
+     include(FetchContent)
+
+     FetchContent_Declare(
+       kdsingleapplication
+       GIT_REPOSITORY https://github.com/KDAB/KDSingleApplication.git
+       GIT_TAG        v1.2.1
+     )
+
+     FetchContent_MakeAvailable(kdsingleapplication)
+
+     target_link_libraries(MyApp PRIVATE KDAB::kdsingleapplication)
+
+The linked target will bring in the include directories.
