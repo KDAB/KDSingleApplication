@@ -73,13 +73,13 @@ KDSingleApplication::KDSingleApplication(QObject *parent)
 
 KDSingleApplication::KDSingleApplication(const QString &name, QObject *parent)
     : QObject(parent)
-    , d_ptr(new KDSingleApplicationPrivate(name, Option::IncludeUsernameInSocketName | Option::IncludeSessionInSocketName, this))
+    , m_dPtr(new KDSingleApplicationPrivate(name, Option::IncludeUsernameInSocketName | Option::IncludeSessionInSocketName, this))
 {
 }
 
 KDSingleApplication::KDSingleApplication(const QString &name, Options options, QObject *parent)
     : QObject(parent)
-    , d_ptr(new KDSingleApplicationPrivate(name, options, this))
+    , m_dPtr(new KDSingleApplicationPrivate(name, options, this))
 {
 }
 

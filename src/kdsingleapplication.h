@@ -52,8 +52,10 @@ Q_SIGNALS:
     void messageReceived(const QByteArray &message);
 
 private:
-    Q_DECLARE_PRIVATE(KDSingleApplication)
-    std::unique_ptr<KDSingleApplicationPrivate> d_ptr;
+    KDSingleApplicationPrivate *d_func() { return m_dPtr.get(); }
+    const KDSingleApplicationPrivate *d_func() const { return m_dPtr.get(); }
+    friend class KDSingleApplicationPrivate;
+    std::unique_ptr<KDSingleApplicationPrivate> m_dPtr;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(KDSingleApplication::Options)
