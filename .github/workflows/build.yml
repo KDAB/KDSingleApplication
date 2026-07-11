@@ -44,7 +44,7 @@ jobs:
           cache: true
 
       - name: Checkout sources
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Install ninja-build tool (must be after Qt due PATH changes)
         uses: turtlesec-no/get-ninja@main
@@ -93,11 +93,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
     - name: Build FreeBSD
       env:
         QT_QPA_PLATFORM: offscreen
-      uses: vmactions/freebsd-vm@v1.4.5
+      uses: vmactions/freebsd-vm@v1.5.0
       with:
         usesh: true
         mem: 4096
@@ -116,11 +116,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
     - name: Build OpenBSD
       env:
         QT_QPA_PLATFORM: offscreen
-      uses: vmactions/openbsd-vm@v1.4.0
+      uses: vmactions/openbsd-vm@v1.4.4
       with:
         usesh: true
         mem: 4096
