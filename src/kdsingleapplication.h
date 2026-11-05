@@ -43,6 +43,13 @@ public:
     QString name() const;
     bool isPrimaryInstance() const;
 
+    // Only valid in a secondary instance. Blocks the calling thread until
+    // the primary instance has exited (or crashed), or until the timeout
+    // (in milliseconds, -1 means wait forever) expires.
+    // Returns true if the primary instance has exited, false on timeout.
+    // Note that this does not turn this instance into the primary one.
+    bool waitForPrimaryInstanceToExit(int timeout = -1);
+
 public Q_SLOTS:
     // avoid default arguments and overloads, as they don't mix with connections
     bool sendMessage(const QByteArray &message);

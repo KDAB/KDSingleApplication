@@ -38,6 +38,11 @@ public:
         return m_impl.sendMessage(message, timeout);
     }
 
+    bool waitForPrimaryInstanceToExit(int timeout)
+    {
+        return m_impl.waitForPrimaryInstanceToExit(timeout);
+    }
+
 private:
     Q_DECLARE_PUBLIC(KDSingleApplication)
 
@@ -108,5 +113,12 @@ bool KDSingleApplication::sendMessageWithTimeout(const QByteArray &message, int 
     return d->sendMessage(message, timeout);
 }
 
+bool KDSingleApplication::waitForPrimaryInstanceToExit(int timeout)
+{
+    Q_ASSERT(!isPrimaryInstance());
+
+    Q_D(KDSingleApplication);
+    return d->waitForPrimaryInstanceToExit(timeout);
+}
 
 KDSingleApplication::~KDSingleApplication() = default;

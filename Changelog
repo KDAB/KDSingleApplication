@@ -1,3 +1,6 @@
+* Unreleased
+ - Add waitForPrimaryInstanceToExit() so a secondary can block until the primary exits (#66)
+
 * v1.2.1
  - Fix crash when message handler spins the event loop resulting in double-free (#114)
 

@@ -121,13 +121,13 @@ KDSingleApplicationLocalSocket::KDSingleApplicationLocalSocket(const QString &na
         m_socketName.chop(fullSocketNameLength - maxSocketNameLength);
     }
 
-    const QString lockFilePath =
+    m_lockFilePath =
         QDir::tempPath() + QLatin1Char('/') + m_socketName + QLatin1String(".lock");
 
     qCDebug(kdsaLocalSocket) << "Socket name is" << m_socketName;
-    qCDebug(kdsaLocalSocket) << "Lock file path is" << lockFilePath;
+    qCDebug(kdsaLocalSocket) << "Lock file path is" << m_lockFilePath;
 
-    std::unique_ptr<QLockFile> lockFile(new QLockFile(lockFilePath));
+    std::unique_ptr<QLockFile> lockFile(new QLockFile(m_lockFilePath));
     lockFile->setStaleLockTime(0);
 
     if (!lockFile->tryLock()) {
@@ -164,6 +164,30 @@ KDSingleApplicationLocalSocket::~KDSingleApplicationLocalSocket() = default;
 bool KDSingleApplicationLocalSocket::isPrimaryInstance() const
 {
     return m_localServer != nullptr;
+}
+
+bool KDSingleApplicationLocalSocket::waitForPrimaryInstanceToExit(int timeout)
+{
+    Q_ASSERT(!isPrimaryInstance());
+
+    qCDebug(kdsaLocalSocket) << "Waiting for the primary instance to exit, timeout" << timeout;
+
+    // The primary holds the lock file for as long as it is alive. Once we
+    // can acquire it, the primary is gone (either it released the lock,
+    // or it died and QLockFile detected the lock as stale).
+    QLockFile lockFile(m_lockFilePath);
+    lockFile.setStaleLockTime(0);
+
+    if (!lockFile.tryLock(timeout)) {
+        qCDebug(kdsaLocalSocket) << "Primary instance still running, lock error" << lockFile.error();
+        return false;
+    }
+
+    // We are only observing; do not become the primary.
+    lockFile.unlock();
+
+    qCDebug(kdsaLocalSocket) << "Primary instance exited";
+    return true;
 }
 
 bool KDSingleApplicationLocalSocket::sendMessage(const QByteArray &message, int timeout)
