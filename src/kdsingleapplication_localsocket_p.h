@@ -86,6 +86,8 @@ public:
 
     bool isPrimaryInstance() const;
 
+    bool waitForPrimaryInstanceToExit(int timeout);
+
 public Q_SLOTS:
     bool sendMessage(const QByteArray &message, int timeout);
 
@@ -101,6 +103,7 @@ private:
     void abortConnectionToSecondary();
 
     QString m_socketName;
+    QString m_lockFilePath;
 
     std::unique_ptr<QLockFile> m_lockFile; // protects m_localServer
     std::unique_ptr<QLocalServer> m_localServer;
